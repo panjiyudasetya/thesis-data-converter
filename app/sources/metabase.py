@@ -268,3 +268,22 @@ class CustomTrackerAPI(MetabaseAPI):
         save_to = f'{directory}/{filename}'
 
         self._download_file(path, save_to, format, self._get_session())
+
+
+class DiaryEntryAPI(MetabaseAPI):
+
+    # Metabase collection's ID that refers to the client's diary-entry card.
+    card_id = 2244
+
+    def download(self, format='csv') -> None:
+        """
+        Downloads clients' diary entries from Metabase in CSV format.
+        """
+        path = f'/card/{self.card_id}/query/{format}'
+
+        directory = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.FILENAME]}'
+
+        save_to = f'{directory}/{filename}'
+
+        self._download_file(path, save_to, format, self._get_session())
