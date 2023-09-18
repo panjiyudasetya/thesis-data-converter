@@ -88,7 +88,7 @@ class FileLocator:
         """
         return {
             FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'planed_event_reflections.csv'
+            FileLocator.FILENAME: 'planned_event_reflections.csv'
         }
 
     @property

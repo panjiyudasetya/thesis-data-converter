@@ -325,3 +325,22 @@ class PlannedEventAPI(MetabaseAPI):
         save_to = f'{directory}/{filename}'
 
         self._download_file(path, save_to, format, self._session_id)
+
+
+class PlannedEventReflectionAPI(MetabaseAPI):
+
+    # Metabase collection's ID that refers to the planned event's reflections card.
+    card_id = 2256
+
+    def extract(self, format='csv') -> None:
+        """
+        Downloads planned events data from Metabase in CSV format.
+        """
+        path = f'/card/{self.card_id}/query/{format}'
+
+        directory = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.FILENAME]}'
+
+        save_to = f'{directory}/{filename}'
+
+        self._download_file(path, save_to, format, self._session_id)
