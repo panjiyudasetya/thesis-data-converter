@@ -2,6 +2,7 @@ from app.sources.metabase import (
     ClientProfileAPI,
     CommunicationAPI,
     CustomTrackerAPI,
+    DiaryEntryAPI,
 )
 
 class DataExtractor:
@@ -13,3 +14,4 @@ class DataExtractor:
         ClientProfileAPI().download()
         CommunicationAPI().download()
         CustomTrackerAPI().download()
+        DiaryEntryAPI().download()
