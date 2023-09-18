@@ -1,13 +1,15 @@
 from app.sources.metabase import (
     ClientProfileAPI,
-    CommunicationAPI
+    CommunicationAPI,
+    CustomTrackerAPI,
 )
 
 class DataExtractor:
 
     def extract(self):
         """
-        Extracts clients' profile from Metabase.
+        Extracts raw data from Metabase.
         """
         ClientProfileAPI().download()
         CommunicationAPI().download()
+        CustomTrackerAPI().download()
