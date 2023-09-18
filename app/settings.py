@@ -2,7 +2,7 @@ import logging
 import os
 import time
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from dotenv import load_dotenv
 from typing import Dict, Union
 
@@ -153,7 +153,7 @@ class CommonSetting:
         """
         Returns the date of when the app converter must run.
         """
-        maximum_date = datetime.now().date() - timedelta(days=1)
+        maximum_date = datetime.now().date()
         selected_date_str = os.environ.get('RUN_FOR_SPECIFIC_DATE')
 
         if selected_date_str:
@@ -178,12 +178,15 @@ class Development(CommonSetting):
     """
 
     def __init__(self) -> None:
-        """
-        The method is overriden to decrease minimum modify app log level
-        into the `INFO` flag.
-        """
+        # Decrease minimum modify app log level into the `INFO` flag.
         logging.root.setLevel(logging.INFO)
         logging.basicConfig(level=logging.INFO)
+
+        # Stores datasource per app's running date.
+        root_dir = f"datasources"
+        date_dir = f"{str(self.running_date()).replace('/', '-')}"
+
+        self.FILE_LOCATOR = FileLocator(f"{root_dir}/{date_dir}")
 
 
 class Production(CommonSetting):
