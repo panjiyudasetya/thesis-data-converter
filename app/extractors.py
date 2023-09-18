@@ -1,4 +1,7 @@
-from app.sources.metabase import ClientProfileAPI
+from app.sources.metabase import (
+    ClientProfileAPI,
+    CommunicationAPI
+)
 
 class DataExtractor:
 
@@ -7,3 +10,4 @@ class DataExtractor:
         Extracts clients' profile from Metabase.
         """
         ClientProfileAPI().download()
+        CommunicationAPI().download()
