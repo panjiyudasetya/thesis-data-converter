@@ -3,6 +3,7 @@ from app.sources.metabase import (
     CommunicationAPI,
     CustomTrackerAPI,
     DiaryEntryAPI,
+    NotificationAPI,
 )
 
 class DataExtractor:
@@ -11,7 +12,8 @@ class DataExtractor:
         """
         Extracts raw data from Metabase.
         """
-        ClientProfileAPI().download()
-        CommunicationAPI().download()
-        CustomTrackerAPI().download()
-        DiaryEntryAPI().download()
+        ClientProfileAPI().extract()
+        CommunicationAPI().extract()
+        CustomTrackerAPI().extract()
+        DiaryEntryAPI().extract()
+        NotificationAPI().extract()
