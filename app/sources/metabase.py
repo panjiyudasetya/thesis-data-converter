@@ -218,7 +218,7 @@ class ClientProfileAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the client's card.
     card_id = 2221
 
-    def download(self, format='csv') -> None:
+    def extract(self, format='csv') -> None:
         """
         Downloads clients' profiles from Metabase in CSV format.
         """
@@ -237,7 +237,7 @@ class CommunicationAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the communication's card.
     card_id = 2243
 
-    def download(self, format='csv') -> None:
+    def extract(self, format='csv') -> None:
         """
         Downloads clients' communications from Metabase in CSV format.
         """
@@ -256,7 +256,7 @@ class CustomTrackerAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the client's custom-tracker card.
     card_id = 2248
 
-    def download(self, format='csv') -> None:
+    def extract(self, format='csv') -> None:
         """
         Downloads clients' custom trackers from Metabase in CSV format.
         """
@@ -275,7 +275,7 @@ class DiaryEntryAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the client's diary-entry card.
     card_id = 2244
 
-    def download(self, format='csv') -> None:
+    def extract(self, format='csv') -> None:
         """
         Downloads clients' diary entries from Metabase in CSV format.
         """
@@ -283,6 +283,25 @@ class DiaryEntryAPI(MetabaseAPI):
 
         directory = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.FILENAME]}'
+
+        save_to = f'{directory}/{filename}'
+
+        self._download_file(path, save_to, format, self._get_session())
+
+
+class  NotificationAPI(MetabaseAPI):
+
+    # Metabase collection's ID that refers to the notification card.
+    card_id = 2244
+
+    def extract(self, format='csv') -> None:
+        """
+        Downloads notification data from Metabase in CSV format.
+        """
+        path = f'/card/{self.card_id}/query/{format}'
+
+        directory = f'{FILE_LOCATOR.notifications[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.notifications[FILE_LOCATOR.FILENAME]}'
 
         save_to = f'{directory}/{filename}'
 
