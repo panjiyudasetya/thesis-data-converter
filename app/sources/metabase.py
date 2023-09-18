@@ -334,12 +334,31 @@ class PlannedEventReflectionAPI(MetabaseAPI):
 
     def extract(self, format='csv') -> None:
         """
-        Downloads planned events data from Metabase in CSV format.
+        Downloads planned event's reflections data from Metabase in CSV format.
         """
         path = f'/card/{self.card_id}/query/{format}'
 
         directory = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.FILENAME]}'
+
+        save_to = f'{directory}/{filename}'
+
+        self._download_file(path, save_to, format, self._session_id)
+
+
+class TherapySessionAPI(MetabaseAPI):
+
+    # Metabase collection's ID that refers to the therapy sessions card.
+    card_id = 2258
+
+    def extract(self, format='csv') -> None:
+        """
+        Downloads therapy sessions data from Metabase in CSV format.
+        """
+        path = f'/card/{self.card_id}/query/{format}'
+
+        directory = f'{FILE_LOCATOR.therapy_sessions[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.therapy_sessions[FILE_LOCATOR.FILENAME]}'
 
         save_to = f'{directory}/{filename}'
 
