@@ -229,7 +229,7 @@ class ClientProfileAPI(MetabaseAPI):
 
         save_to = f'{directory}/{filename}'
 
-        self._download_file(path, save_to, format, self._get_session())
+        self._download_file(path, save_to, format, self._session_id)
 
 
 class CommunicationAPI(MetabaseAPI):
@@ -248,7 +248,7 @@ class CommunicationAPI(MetabaseAPI):
 
         save_to = f'{directory}/{filename}'
 
-        self._download_file(path, save_to, format, self._get_session())
+        self._download_file(path, save_to, format, self._session_id)
 
 
 class CustomTrackerAPI(MetabaseAPI):
@@ -267,7 +267,7 @@ class CustomTrackerAPI(MetabaseAPI):
 
         save_to = f'{directory}/{filename}'
 
-        self._download_file(path, save_to, format, self._get_session())
+        self._download_file(path, save_to, format, self._session_id)
 
 
 class DiaryEntryAPI(MetabaseAPI):
@@ -286,10 +286,10 @@ class DiaryEntryAPI(MetabaseAPI):
 
         save_to = f'{directory}/{filename}'
 
-        self._download_file(path, save_to, format, self._get_session())
+        self._download_file(path, save_to, format, self._session_id)
 
 
-class  NotificationAPI(MetabaseAPI):
+class NotificationAPI(MetabaseAPI):
 
     # Metabase collection's ID that refers to the notification card.
     card_id = 2244
@@ -305,4 +305,23 @@ class  NotificationAPI(MetabaseAPI):
 
         save_to = f'{directory}/{filename}'
 
-        self._download_file(path, save_to, format, self._get_session())
+        self._download_file(path, save_to, format, self._session_id)
+
+
+class PlannedEventAPI(MetabaseAPI):
+
+    # Metabase collection's ID that refers to the planned events card.
+    card_id = 2255
+
+    def extract(self, format='csv') -> None:
+        """
+        Downloads planned events data from Metabase in CSV format.
+        """
+        path = f'/card/{self.card_id}/query/{format}'
+
+        directory = f'{FILE_LOCATOR.events[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.events[FILE_LOCATOR.FILENAME]}'
+
+        save_to = f'{directory}/{filename}'
+
+        self._download_file(path, save_to, format, self._session_id)
