@@ -249,3 +249,22 @@ class CommunicationAPI(MetabaseAPI):
         save_to = f'{directory}/{filename}'
 
         self._download_file(path, save_to, format, self._get_session())
+
+
+class CustomTrackerAPI(MetabaseAPI):
+
+    # Metabase collection's ID that refers to the client's custom-tracker card.
+    card_id = 2248
+
+    def download(self, format='csv') -> None:
+        """
+        Downloads clients' custom trackers from Metabase in CSV format.
+        """
+        path = f'/card/{self.card_id}/query/{format}'
+
+        directory = f'{FILE_LOCATOR.custom_trackers[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.custom_trackers[FILE_LOCATOR.FILENAME]}'
+
+        save_to = f'{directory}/{filename}'
+
+        self._download_file(path, save_to, format, self._get_session())
