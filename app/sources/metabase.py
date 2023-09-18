@@ -96,14 +96,15 @@ class BaseAPI:
         dirs = save_to.split('/')
         size_dirs = len(dirs)
 
-        save_to_dirs = dirs[:size_dirs - 1] if size_dirs > 1 else None
-        if not os.path.exists(save_to):
-            os.makedirs('/'.join(save_to_dirs))
+        download_dirs = dirs[:size_dirs - 1] if size_dirs > 1 else []
+        download_dirs_path = '/'.join(download_dirs)
+        if download_dirs_path and not os.path.exists(download_dirs_path):
+            os.makedirs(download_dirs_path)
 
         # Setup download location
         save_as_file = dirs[size_dirs - 1]
-        if save_to_dirs:
-            save_as_file = f"{'/'.join(save_to_dirs)}/{save_as_file}"
+        if download_dirs:
+            save_as_file = f"{download_dirs_path}/{save_as_file}"
 
         # Download file
         url = self._api_url + path
@@ -213,17 +214,37 @@ class MetabaseAPI(BaseAPI):
 
 
 class ClientProfileAPI(MetabaseAPI):
-
-    CARD_ID = 2221
+    
+    # Metabase collection's ID that refers to the client's card.
+    card_id = 2221
 
     def download(self, format='csv') -> None:
         """
         Downloads clients' profiles from Metabase in CSV format.
         """
-        path = f'/card/{ClientProfileAPI.CARD_ID}/query/{format}'
+        path = f'/card/{self.card_id}/query/{format}'
 
         directory = f'{FILE_LOCATOR.clients[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.clients[FILE_LOCATOR.FILENAME]}'
+
+        save_to = f'{directory}/{filename}'
+
+        self._download_file(path, save_to, format, self._get_session())
+
+
+class CommunicationAPI(MetabaseAPI):
+
+    # Metabase collection's ID that refers to the communication's card.
+    card_id = 2243
+
+    def download(self, format='csv') -> None:
+        """
+        Downloads clients' communications from Metabase in CSV format.
+        """
+        path = f'/card/{self.card_id}/query/{format}'
+
+        directory = f'{FILE_LOCATOR.communications[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.communications[FILE_LOCATOR.FILENAME]}'
 
         save_to = f'{directory}/{filename}'
 
