@@ -6,7 +6,8 @@ from app.sources.metabase import (
     NotificationAPI,
     PlannedEventAPI,
     PlannedEventReflectionAPI,
-    TherapySessionAPI
+    TherapySessionAPI,
+    ThoughtRecordAPI
 )
 
 class DataExtractor:
@@ -23,3 +24,4 @@ class DataExtractor:
         PlannedEventAPI().extract()
         PlannedEventReflectionAPI().extract()
         TherapySessionAPI().extract()
+        ThoughtRecordAPI().extract()
