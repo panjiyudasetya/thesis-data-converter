@@ -382,3 +382,22 @@ class ThoughtRecordAPI(MetabaseAPI):
         save_to = f'{directory}/{filename}'
 
         self._download_file(path, save_to, format, self._session_id)
+
+
+class SMQAPI(MetabaseAPI):
+
+    # Metabase collection's ID that refers to the Session Measurement Questionnaires (SMQ) card.
+    card_id = 2251
+
+    def extract(self, format='csv') -> None:
+        """
+        Downloads SMQ results from Metabase in CSV format.
+        """
+        path = f'/card/{self.card_id}/query/{format}'
+
+        directory = f'{FILE_LOCATOR.smqs[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.smqs[FILE_LOCATOR.FILENAME]}'
+
+        save_to = f'{directory}/{filename}'
+
+        self._download_file(path, save_to, format, self._session_id)
