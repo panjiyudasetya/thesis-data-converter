@@ -363,3 +363,22 @@ class TherapySessionAPI(MetabaseAPI):
         save_to = f'{directory}/{filename}'
 
         self._download_file(path, save_to, format, self._session_id)
+
+
+class ThoughtRecordAPI(MetabaseAPI):
+
+    # Metabase collection's ID that refers to the client's thought records card.
+    card_id = 2245
+
+    def extract(self, format='csv') -> None:
+        """
+        Downloads clients' thought records from Metabase in CSV format.
+        """
+        path = f'/card/{self.card_id}/query/{format}'
+
+        directory = f'{FILE_LOCATOR.thought_records[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.thought_records[FILE_LOCATOR.FILENAME]}'
+
+        save_to = f'{directory}/{filename}'
+
+        self._download_file(path, save_to, format, self._session_id)
