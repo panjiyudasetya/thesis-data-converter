@@ -3,8 +3,9 @@ from app.sources.metabase import (
     CommunicationAPI,
     CustomTrackerAPI,
     DiaryEntryAPI,
-    PlannedEventAPI,
     NotificationAPI,
+    PlannedEventAPI,
+    PlannedEventReflectionAPI,
 )
 
 class DataExtractor:
@@ -19,3 +20,4 @@ class DataExtractor:
         DiaryEntryAPI().extract()
         NotificationAPI().extract()
         PlannedEventAPI().extract()
+        PlannedEventReflectionAPI().extract()
