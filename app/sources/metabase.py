@@ -223,7 +223,7 @@ class MetabaseAPI(BaseAPI):
 class ClientInfoAPI(MetabaseAPI):
 
     # Metabase collection's ID that refers to the client's card.
-    card_id = 2221
+    card_id = 2254
 
     def extract(self, format='csv') -> None:
         """

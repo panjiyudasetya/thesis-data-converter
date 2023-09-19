@@ -58,10 +58,9 @@ class ClientInfo:
             dtype={
                 'client_id': str,
                 'therapist_id': str,
-                'no_of_days_with_calls': 'int64',
-                'no_of_registrations': 'int64',
                 'start_time': str,
                 'end_time': str,
+                'no_of_registrations': 'int64',
             },
             parse_dates=['start_time', 'end_time']
         )
