@@ -299,7 +299,7 @@ class DiaryEntryAPI(MetabaseAPI):
 class NotificationAPI(MetabaseAPI):
 
     # Metabase collection's ID that refers to the notification card.
-    card_id = 2244
+    card_id = 2250
 
     def extract(self, format='csv') -> None:
         """
