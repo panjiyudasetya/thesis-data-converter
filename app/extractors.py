@@ -107,13 +107,50 @@ class CustomTracker:
 
         path = f'{directory}/{snapshot_date_str}/{filename}'
 
-        return pd.read_csv(
+        # Read dataframe
+        df = pd.read_csv(
             path,
             dtype={
                 'client_id': str,
                 'start_time': str,
                 'name': str,
                 'value': str,
-            },
-            parse_dates=['start_time']
+            }
         )
+
+        # The `start_time` column is a stringify date-time, 
+        # and `parse_dates` property can't convert them automatically.
+        # Therefore, we need to convert it to datetime object manually.
+        df['start_time'] = pd.to_datetime(df['start_time'], format='ISO8601')
+        return df
+
+
+class DiaryEntry:
+
+    def select(self, snapshot_date: date) -> pd.DataFrame:
+        """
+        Selects snapshot of the diary entries data from local storage
+        that have been downloaded at the given `snapshot_date`.
+        """
+        snapshot_date_str = snapshot_date.strftime("%Y-%m-%d")
+
+        directory = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.FILENAME]}'
+
+        path = f'{directory}/{snapshot_date_str}/{filename}'
+
+        # Read dataframe
+        df = pd.read_csv(
+            path,
+            dtype={
+                'client_id': str,
+                'start_time': str,
+            }
+        )
+
+        # The `start_time` column is a stringify date-time, 
+        # and `parse_dates` property can't convert them automatically.
+        # Therefore, we need to convert it to datetime object manually.
+        df['start_time'] = pd.to_datetime(df['start_time'], format='ISO8601')
+        return df
+
