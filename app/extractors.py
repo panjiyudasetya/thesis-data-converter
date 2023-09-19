@@ -154,3 +154,27 @@ class DiaryEntry:
         df['start_time'] = pd.to_datetime(df['start_time'], format='ISO8601')
         return df
 
+
+class Notification:
+
+    def select(self, snapshot_date: date) -> pd.DataFrame:
+        """
+        Selects snapshot of the notification data from local storage
+        that have been downloaded at the given `snapshot_date`.
+        """
+        snapshot_date_str = snapshot_date.strftime("%Y-%m-%d")
+
+        directory = f'{FILE_LOCATOR.notifications[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.notifications[FILE_LOCATOR.FILENAME]}'
+
+        path = f'{directory}/{snapshot_date_str}/{filename}'
+
+        return pd.read_csv(
+            path,
+            dtype={
+                'client_id': str,
+                'type': str,
+                'start_time': str,
+            },
+            parse_dates=['start_time']
+        )
