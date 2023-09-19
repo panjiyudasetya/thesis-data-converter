@@ -24,6 +24,19 @@ logger = logging.getLogger(__name__)
 
 class Criteria:
 
+    CODE_CASE_ID = 'case_id'
+    CODE_CLIENT_ID = 'client_id'
+    CODE_TREATMENT_PHASE = 'p'
+    CODE_CRITERION_A = 'a'
+    CODE_CRITERION_B = 'b'
+    CODE_CRITERION_C = 'c'
+    CODE_CRITERION_D = 'd'
+    CODE_CRITERION_E = 'e'
+    CODE_CRITERION_F = 'f'
+    CODE_CRITERION_G = 'g'
+    CODE_CRITERION_H = 'h'
+    CODE_CRITERION_I = 'i'
+
     def __init__(self, for_date: date) -> None:
         # Set the date of when criteria is formulated
         self.for_date = for_date
@@ -54,19 +67,32 @@ class Criteria:
         Creates criteria data of the clients who has social anxiety disorder
         at the given `self.for_date`.
         """
-        criteria = pd.DataFrame()
+        criteria = pd.DataFrame({
+            Criteria.CODE_CASE_ID: [],
+            Criteria.CODE_CLIENT_ID: [],
+            Criteria.CODE_CRITERION_A: [],
+            Criteria.CODE_CRITERION_B: [],
+            Criteria.CODE_CRITERION_C: [],
+            Criteria.CODE_CRITERION_D: [],
+            Criteria.CODE_CRITERION_E: [],
+            Criteria.CODE_CRITERION_F: [],
+            Criteria.CODE_CRITERION_G: [],
+            Criteria.CODE_CRITERION_H: [],
+            Criteria.CODE_CRITERION_I: [],
+        })
 
-        self._add_common_information(criteria)
-        self._add_phases_of_the_treatment(criteria)
-        self._add_days_since_last_contact(criteria)
-        self._add_days_since_last_registration(criteria)
-        self._add_total_registrations_of_custom_tracker(criteria)
-        self._add_rate_of_change_neg_regs(criteria)
-        self._add_rate_of_change_pos_regs(criteria)
-        self._add_completion_of_planned_activities(criteria)
-        self._add_completion_of_thought_records(criteria)
-        self._add_smq_answers(criteria)
-        self._add_completion_of_diary_entries(criteria)
+        for _, client_info in self.clients.iterrows():
+            criteria = self._add_common_information(client_info, criteria)
+            criteria = self._add_treatment_phase(client_info, criteria)
+            criteria = self._add_days_since_last_contact(client_info, criteria)
+            criteria = self._add_days_since_last_registration(client_info, criteria)
+            criteria = self._add_total_registrations_of_custom_tracker(client_info, criteria)
+            criteria = self._add_rate_of_change_neg_regs(client_info, criteria)
+            criteria = self._add_rate_of_change_pos_regs(client_info, criteria)
+            criteria = self._add_completion_of_planned_events(client_info, criteria)
+            criteria = self._add_completion_of_thought_records(client_info, criteria)
+            criteria = self._add_smq_answers(client_info, criteria)
+            criteria = self._add_completion_of_diary_entries(client_info, criteria)
 
         return criteria
 
@@ -76,47 +102,60 @@ class Criteria:
         """
         pass
 
-    def _add_common_information(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
+    def _add_common_information(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
         """
-        Add the common information to the criteria dataframe.
+        Add the common information of that `client` to the criteria dataframe.
 
         The common information consists of:
         - Case IDs;
         - Client IDs;
         """
-        logger.info("Add common information to the criteria dataframe...")
+        logger.info(f"Add the {client['client_id']} common information to the criteria dataframe...")
 
-        # TODO: Assign common info to the criteria dataframe
+        client_id = client['client_id']
+        case_id = self._compute_case_id(client_id, client['therapist_id'])
+
+        new_data = {
+            Criteria.CODE_CASE_ID: [case_id],
+            Criteria.CODE_CLIENT_ID: [client_id],
+        }
+
+        to_criteria = pd.concat(
+            [to_criteria, pd.DataFrame(new_data)],
+            ignore_index=True
+        )
 
         return to_criteria
 
-    def _add_phases_of_the_treatment(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
+    def _add_treatment_phase(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
         """
-        Add phases of the treatment to the criteria dataframe.
+        Add phase of the treatment of that `client` to the criteria dataframe.
         """
-        logger.info("Add phases of the treatment to the criteria dataframe...")
+        logger.info(f"Add {client['client_id']} phase of the treatment to the criteria dataframe...")
 
-        # TODO: Assign criterium to the criteria dataframe
-        to_criteria['p'] = np.array([])
+        # TODO: Assign treatment phase to the criteria dataframe
 
-    def _add_days_since_last_contact(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
+        return to_criteria
+
+    def _add_days_since_last_contact(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
         """
         Add the number of days since the last interaction
-        between the clients and their therapists to the criteria dataframe.
+        between that `client` and their therapists to the criteria dataframe.
 
         The last interaction date defined as the maximum date between:
         - The date of the last therapy session; AND
         - The date of their last chat interaction; AND
         - The date of their last call interaction;
         """
-        logger.info("Add number of days since last contact to the criteria dataframe...")
+        logger.info(f"Add {client['client_id']} number of days since last contact to the criteria dataframe...")
 
         # TODO: Assign criterium to the criteria dataframe
-        to_criteria['a'] = np.array([])
 
-    def _add_days_since_last_registration(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
+        return to_criteria
+
+    def _add_days_since_last_registration(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
         """
-        Add the number of days since the last time the clients made a registration
+        Add the number of days since the last time the `client` made a registration
         for one of these trackers:
         - Diary
         - GSchema
@@ -126,79 +165,87 @@ class Criteria:
             - Safety behavior
             - Worry
         """
-        logger.info("Add number of days since last registration to the criteria dataframe...")
+        logger.info(f"Add {client['client_id']} number of days since last registration to the criteria dataframe...")
 
         # TODO: Assign criterium to the criteria dataframe
-        to_criteria['b'] = np.array([])
 
-    def _add_total_registrations_of_custom_tracker(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
+        return to_criteria
+
+    def _add_total_registrations_of_custom_tracker(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
         """
         Add the number of the custom tracker registrations in the last 7 days
-        that have been submitted by the clients to the criteria dataframe.
+        that have been submitted by that `client` to the criteria dataframe.
         """
-        logger.info("Add total registrations of the clients' custom trackers to the criteria dataframe...")
+        logger.info(f"Add {client['client_id']} total registrations of the custom trackers to the criteria dataframe...")
 
         # TODO: Assign criterium to the criteria dataframe
-        to_criteria['c'] = np.array([])
 
-    def _add_rate_of_change_neg_regs(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
+        return to_criteria
+
+    def _add_rate_of_change_neg_regs(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
         """
-        Add the comparison result of the total negative registrations made by the clients
+        Add the comparison result of the total negative registrations made by that `client`
         between the last seven days (1-7) and the seven days before that (8-14)
         to the criteria dataframe.
         """
-        logger.info("Add rate of change of the negative registrations to the criteria dataframe...")
+        logger.info(f"Add {client['client_id']} rate of change of the negative registrations to the criteria dataframe...")
 
         # TODO: Assign criterium to the criteria dataframe
-        to_criteria['d'] = np.array([])
 
-    def _add_rate_of_change_pos_regs(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
+        return to_criteria
+
+    def _add_rate_of_change_pos_regs(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
         """
-        Add the comparison result of the total positive registrations made by the patient
+        Add the comparison result of the total positive registrations made by that `client`
         between the last seven days (1-7) and the seven days before that (8-14)
         to the criteria dataframe.
         """
-        logger.info("Add rate of change of the positive registrations to the criteria dataframe...")
+        logger.info(f"Add {client['client_id']} rate of change of the positive registrations to the criteria dataframe...")
 
         # TODO: Assign criterium to the criteria dataframe
-        to_criteria['e'] = np.array([])
 
-    def _add_completion_of_planned_activities(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
+        return to_criteria
+
+    def _add_completion_of_planned_events(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
         """
-        Add the completion statuses of the planned activities to the criteria dataframe.
+        Add the completion status of the `client`'s planned events to the criteria dataframe.
         """
         
-        logger.info("Add rate of change of the positive registrations to the criteria dataframe...")
+        logger.info(f"Add the completion status of the {client['client_id']} planned events to the criteria dataframe...")
 
         # TODO: Assign criterium to the criteria dataframe
-        to_criteria['f'] = np.array([])
 
-    def _add_completion_of_thought_records(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
-        """
-        Add the thought record's completion statuses to the criteria dataframe.
-        """
-        logger.info("Add the thought record's completion statuses to the criteria dataframe...")
+        return to_criteria
 
-        # TODO: Assign criterium to the criteria dataframe
-        to_criteria['g'] = np.array([])
-
-    def _add_smq_answers(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
+    def _add_completion_of_thought_records(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
         """
-        Add the answers of the Session Measurement Questionnaires (SMQ) to the criteria dataframe.
+        Add the completion status of the `client`'s thought records the criteria dataframe.
         """
-        logger.info("Add the SMQ's answers to the criteria dataframe...")
+        logger.info(f"Add the completion status of the {client['client_id']} thought records to the criteria dataframe...")
 
         # TODO: Assign criterium to the criteria dataframe
-        to_criteria['h'] = np.array([])
 
-    def _add_completion_of_diary_entries(self, to_criteria: pd.DataFrame) -> pd.DataFrame:
+        return to_criteria
+
+    def _add_smq_answers(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
         """
-        Add the diary entry's completion statuses to the criteria dataframe.
+        Add the `client`'s answers of the Session Measurement Questionnaires (SMQ) to the criteria dataframe.
         """
-        logger.info("Add the diary entry's completion statuses to the criteria dataframe...")
+        logger.info(f"Add the answers of the {client['client_id']} SMQs to the criteria dataframe...")
 
         # TODO: Assign criterium to the criteria dataframe
-        to_criteria['i'] = np.array([])
+
+        return to_criteria
+
+    def _add_completion_of_diary_entries(self, client: pd.Series, to_criteria: pd.DataFrame) -> pd.DataFrame:
+        """
+        Add the completion status of the `client`'s diary entries to the criteria dataframe.
+        """
+        logger.info(f"Add the completion status of the {client['client_id']} diary entries to the criteria dataframe...")
+
+        # TODO: Assign criterium to the criteria dataframe
+
+        return to_criteria
 
     def _compute_case_id(self, client_id: str, therapist_id: str) -> str:
         """
