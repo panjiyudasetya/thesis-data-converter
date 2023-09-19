@@ -221,7 +221,7 @@ class MetabaseAPI(BaseAPI):
 
 
 class ClientProfileAPI(MetabaseAPI):
-    
+
     # Metabase collection's ID that refers to the client's card.
     card_id = 2221
 
