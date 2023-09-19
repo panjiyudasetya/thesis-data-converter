@@ -178,3 +178,32 @@ class Notification:
             },
             parse_dates=['start_time']
         )
+
+
+class PlannedEvent:
+
+    def select(self, snapshot_date: date) -> pd.DataFrame:
+        """
+        Selects snapshot of the planned event data from local storage
+        that have been downloaded at the given `snapshot_date`.
+        """
+        snapshot_date_str = snapshot_date.strftime("%Y-%m-%d")
+
+        directory = f'{FILE_LOCATOR.events[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.events[FILE_LOCATOR.FILENAME]}'
+
+        path = f'{directory}/{snapshot_date_str}/{filename}'
+
+        return pd.read_csv(
+            path,
+            dtype={
+                'id': str,
+                'recurring_expression': str,
+                'client_id': str,
+                'created_at': str,
+                'start_time': str,
+                'end_time': str,
+                'terminated_time': str,
+            },
+            parse_dates=['start_time', 'end_time', 'terminated_time']
+        )
