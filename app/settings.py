@@ -182,12 +182,6 @@ class Development(CommonSetting):
         logging.root.setLevel(logging.INFO)
         logging.basicConfig(level=logging.INFO)
 
-        # Stores datasource per app's running date.
-        root_dir = f"datasources"
-        date_dir = f"{str(self.running_date()).replace('/', '-')}"
-
-        self.FILE_LOCATOR = FileLocator(f"{root_dir}/{date_dir}")
-
 
 class Production(CommonSetting):
     """

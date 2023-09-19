@@ -98,8 +98,15 @@ class BaseAPI:
 
         download_dirs = dirs[:size_dirs - 1] if size_dirs > 1 else []
         download_dirs_path = '/'.join(download_dirs)
-        if download_dirs_path and not os.path.exists(download_dirs_path):
-            os.makedirs(download_dirs_path)
+
+        if download_dirs_path:
+            # Append download date at the end of the path of download directories
+            download_date = f"{str(settings.running_date()).replace('/', '-')}"
+            download_dirs_path = f"{download_dirs_path}/{download_date}"
+
+            # Create download directories if they don't exists locally
+            if not os.path.exists(download_dirs_path):
+                os.makedirs(download_dirs_path)
 
         # Setup download location
         save_as_file = dirs[size_dirs - 1]
@@ -116,7 +123,7 @@ class BaseAPI:
         chunk_size = 4096
 
         with post(url, data=payload, headers=headers, stream=True, hooks=hooks) as req:
-            with open(save_to, 'wb') as file:
+            with open(save_as_file, 'wb') as file:
                 # Writes response data in chunk
                 for chunk in req.iter_content(chunk_size):
                     if not chunk:
