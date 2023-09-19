@@ -10,8 +10,8 @@ def interactions_to_criterion(
     timestamp: datetime
 ) -> Union[int, None]:
     """
-    Transforms the client's communications and their sessions
-    into the criterion that refers to the number of days of since last contact.
+    Transforms the client's communications and their sessions into criterion
+    that refers to the number of days of since last contact.
     """
     # Find latest communication date
     communication_dates = communications['start_time']

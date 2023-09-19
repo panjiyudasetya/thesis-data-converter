@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 
 from datetime import date
+from dateutil.parser import parse
 from typing import Dict
 
 from app.extractors import (
@@ -19,7 +20,8 @@ from app.extractors import (
     SMQ
 )
 from app.transformators import (
-    calls_to_treatment_phase
+    calls_to_treatment_phase,
+    interactions_to_criterion
 )
 
 
@@ -99,9 +101,6 @@ class Criteria:
             self._add_smq_answers(client_info, criteria_data)
             self._add_completion_of_diary_entries(client_info, criteria_data)
 
-        from pdb import set_trace
-        set_trace()
-
         return pd.DataFrame(criteria_data)
 
     def _store(self, criteria) -> None:
@@ -143,7 +142,9 @@ class Criteria:
         ]
 
         # Append treatment phase
-        data[Criteria.CODE_TREATMENT_PHASE].append(calls_to_treatment_phase(calls))
+        data[Criteria.CODE_TREATMENT_PHASE].append(
+            calls_to_treatment_phase(calls)
+        )
 
     def _add_days_since_last_contact(self, client: pd.Series, data: Dict) -> None:
         """
@@ -157,8 +158,23 @@ class Criteria:
         """
         logger.info(f"Add {client['client_id']} number of days since last contact to the criteria data...")
 
-        # TODO: Assign criterium to the criteria data
-        data[Criteria.CODE_CRITERION_A].append(None)
+        # Filters communication data.
+        communications = self.communications[
+            (self.communications['client_id'] == client['client_id']) &
+            (self.communications['start_time'] <= np.datetime64(str(self.for_date)))
+        ]
+
+        # Filters session data.
+        sessions = self.sessions[
+            (self.sessions['client_id'] == client['client_id']) &
+            (self.sessions['start_time'] <= np.datetime64(str(self.for_date)))
+        ]
+
+        # Append criterion `a`
+        timestamp = parse(f'{self.for_date.strftime("%Y-%m-%d")}T00:00:00')
+        data[Criteria.CODE_CRITERION_A].append(
+            interactions_to_criterion(communications, sessions, timestamp)
+        )
 
     def _add_days_since_last_registration(self, client: pd.Series, data: Dict) -> None:
         """
