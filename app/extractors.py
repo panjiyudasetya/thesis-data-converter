@@ -207,3 +207,29 @@ class PlannedEvent:
             },
             parse_dates=['start_time', 'end_time', 'terminated_time']
         )
+
+
+class PlannedEventReflection:
+
+    def select(self, snapshot_date: date) -> pd.DataFrame:
+        """
+        Selects snapshot of the planned event's reflections data from local storage
+        that have been downloaded at the given `snapshot_date`.
+        """
+        snapshot_date_str = snapshot_date.strftime("%Y-%m-%d")
+
+        directory = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.FILENAME]}'
+
+        path = f'{directory}/{snapshot_date_str}/{filename}'
+
+        return pd.read_csv(
+            path,
+            dtype={
+                'status': str,
+                'planned_event_id': str,
+                'start_time': str,
+            },
+            parse_dates=['start_time']
+        )
+
