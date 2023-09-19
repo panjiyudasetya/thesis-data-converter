@@ -21,7 +21,8 @@ from app.extractors import (
 )
 from app.transformators import (
     calls_to_treatment_phase,
-    interactions_to_criterion
+    interactions_to_criterion,
+    registrations_to_criterion
 )
 
 
@@ -190,8 +191,35 @@ class Criteria:
         """
         logger.info(f"Add {client['client_id']} number of days since last registration to the criteria data...")
 
-        # TODO: Assign criterium to the criteria data
-        data[Criteria.CODE_CRITERION_B].append(None)
+        # Filters diary entries data.
+        diaries = self.diary_entries[
+            (self.diary_entries['client_id'] == client['client_id']) &
+            (self.diary_entries['start_time'] <= np.datetime64(str(self.for_date)))
+        ]
+
+        # Filters thought records data.
+        thought_records = self.thought_records[
+            (self.thought_records['client_id'] == client['client_id']) &
+            (self.thought_records['start_time'] <= np.datetime64(str(self.for_date)))
+        ]
+
+        # Filters sessions data.
+        smqs = self.smqs[
+            (self.smqs['client_id'] == client['client_id']) &
+            (self.smqs['start_time'] <= np.datetime64(str(self.for_date)))
+        ]
+
+        # Filters custom trackers data.
+        custom_trackers = self.custom_trackers[
+            (self.custom_trackers['client_id'] == client['client_id']) &
+            (self.custom_trackers['start_time'] <= np.datetime64(str(self.for_date)))
+        ]
+
+        # Append criterion `b`
+        timestamp = parse(f'{self.for_date.strftime("%Y-%m-%d")}T00:00:00')
+        data[Criteria.CODE_CRITERION_B].append(
+            registrations_to_criterion(diaries, thought_records, smqs, custom_trackers, timestamp)
+        )
 
     def _add_total_registrations_of_custom_tracker(self, client: pd.Series, data: Dict) -> None:
         """
