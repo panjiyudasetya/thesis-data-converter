@@ -220,14 +220,14 @@ class MetabaseAPI(BaseAPI):
         return Fernet(settings.SECRET_KEY).decrypt(encrypted_text).decode('ascii')
 
 
-class ClientProfileAPI(MetabaseAPI):
+class ClientInfoAPI(MetabaseAPI):
 
     # Metabase collection's ID that refers to the client's card.
     card_id = 2221
 
     def extract(self, format='csv') -> None:
         """
-        Downloads clients' profiles from Metabase in CSV format.
+        Downloads client's information from Metabase in CSV format.
         """
         path = f'/card/{self.card_id}/query/{format}'
 

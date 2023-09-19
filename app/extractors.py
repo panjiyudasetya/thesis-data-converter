@@ -4,7 +4,7 @@ from datetime import date
 
 from app.settings import app_settings as settings
 from app.sources.metabase import (
-    ClientProfileAPI,
+    ClientInfoAPI,
     CommunicationAPI,
     CustomTrackerAPI,
     DiaryEntryAPI,
@@ -27,7 +27,7 @@ class MetabaseCollection:
         Pulls all of collection data from Metabase
         and stores in the local storage.
         """
-        ClientProfileAPI().extract()
+        ClientInfoAPI().extract()
         CommunicationAPI().extract()
         CustomTrackerAPI().extract()
         DiaryEntryAPI().extract()
@@ -39,7 +39,7 @@ class MetabaseCollection:
         SMQAPI().extract()
 
 
-class ClientProfile:
+class ClientInfo:
 
     def select_snapshot(self, date: date) -> pd.DataFrame:
         """

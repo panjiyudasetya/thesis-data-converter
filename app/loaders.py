@@ -1,3 +1,4 @@
+import hashlib
 import logging
 import numpy as np
 import pandas as pd
@@ -5,7 +6,7 @@ import pandas as pd
 from datetime import date
 
 from app.extractors import (
-    ClientProfile,
+    ClientInfo,
     Communication,
     CustomTracker,
     DiaryEntry,
@@ -28,7 +29,7 @@ class Criteria:
         self.for_date = for_date
 
         # Select dataset for the specific date
-        self.clients = ClientProfile().select_snapshot(self.for_date)
+        self.clients = ClientInfo().select_snapshot(self.for_date)
         self.communications = Communication().select_snapshot(self.for_date)
         self.custom_trackers = CustomTracker().select_snapshot(self.for_date)
         self.diary_entries = DiaryEntry().select_snapshot(self.for_date)
@@ -80,12 +81,12 @@ class Criteria:
         Add the common information to the criteria dataframe.
 
         The common information consists of:
-        - The list of Patient IDs
-        - The dates of when the first treatment is occurred after the intake session
+        - Case IDs;
+        - Client IDs;
         """
         logger.info("Add common information to the criteria dataframe...")
 
-        # TODO: Assign common information to the criteria dataframe
+        # TODO: Assign common info to the criteria dataframe
 
         return to_criteria
 
@@ -198,3 +199,10 @@ class Criteria:
 
         # TODO: Assign criterium to the criteria dataframe
         to_criteria['i'] = np.array([])
+
+    def _compute_case_id(self, client_id: str, therapist_id: str) -> str:
+        """
+        Hashes the incoming values with MD5.
+        """
+        plain_case_id = f"{client_id}#{therapist_id}#{self.for_date}"
+        return hashlib.md5(plain_case_id.encode()).hexdigest()
