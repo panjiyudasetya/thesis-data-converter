@@ -14,6 +14,7 @@ from app.datasources.metabase import (
     ThoughtRecordAPI,
     SMQAPI,
 )
+from app.helpers import to_dict
 from app.settings import app_settings as settings
 
 
@@ -121,6 +122,10 @@ class CustomTracker:
         # and `parse_dates` property can't convert them automatically.
         # Therefore, we need to convert it to datetime object manually.
         df['start_time'] = pd.to_datetime(df['start_time'], format='ISO8601')
+
+        # Convert `value` into dictionary
+        df['value'] = df['value'].apply(lambda item: to_dict(item))
+
         return df
 
 
@@ -193,7 +198,8 @@ class PlannedEvent:
 
         path = f'{directory}/{date_str}/{filename}'
 
-        return pd.read_csv(
+        # Read dataframe
+        df = pd.read_csv(
             path,
             dtype={
                 'id': str,
@@ -206,6 +212,11 @@ class PlannedEvent:
             },
             parse_dates=['start_time', 'end_time', 'terminated_time']
         )
+
+        # Convert `recurring_expression` into dictionary
+        df['recurring_expression'] = df['recurring_expression'].apply(lambda item: to_dict(item))
+
+        return df
 
 
 class PlannedEventReflection:
