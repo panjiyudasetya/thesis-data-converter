@@ -162,5 +162,5 @@ cython_debug/
 # Thesis project settings
 .metabase.session.tmp
 .vscode/
-datasources/
+snapshots/
 input/

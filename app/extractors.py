@@ -2,8 +2,7 @@ import pandas as pd
 
 from datetime import date
 
-from app.settings import app_settings as settings
-from app.sources.metabase import (
+from app.datasources.metabase import (
     ClientInfoAPI,
     CommunicationAPI,
     CustomTrackerAPI,
@@ -15,6 +14,7 @@ from app.sources.metabase import (
     ThoughtRecordAPI,
     SMQAPI,
 )
+from app.settings import app_settings as settings
 
 
 FILE_LOCATOR = settings.FILE_LOCATOR
