@@ -18,7 +18,7 @@ class FileLocator:
     DIR = 'DIRECTORY'
     FILENAME = 'FILENAME'
 
-    def __init__(self, root_dir: str = 'datasources'):
+    def __init__(self, root_dir: str = 'snapshots'):
         self.root_dir = root_dir
 
     @property
