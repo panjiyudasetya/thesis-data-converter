@@ -26,6 +26,7 @@ from app.transformators import (
     planned_events_to_criterion,
     positive_registrations_to_criterion,
     registrations_to_criterion,
+    smqs_to_criterion,
     thought_records_to_criterion,
 )
 
@@ -383,8 +384,16 @@ class Criteria:
         """
         logger.info(f"Add the answers of the {client['client_id']} SMQs to the criteria data...")
 
-        # TODO: Assign criterium to the criteria data
-        data[Criteria.CODE_CRITERION_H].append(None)
+        # Filters thought records data and sort them in descending order.
+        smqs = self.smqs[(self.smqs['client_id'] == client['client_id'])]
+        smqs = smqs.sort_values(by=['start_time'], ascending=False)
+
+        # Get the last two SMQs
+        last_smq = smqs.iloc[0] if len(smqs.index) > 0 else None
+        prev_smq = smqs.iloc[1] if len(smqs.index) > 1 else None
+
+        # Append criterion `h`
+        data[Criteria.CODE_CRITERION_H].append(smqs_to_criterion(last_smq, prev_smq))
 
     def _add_completion_of_diary_entries(self, client: pd.Series, data: Dict) -> None:
         """
