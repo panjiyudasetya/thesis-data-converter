@@ -10,7 +10,7 @@ def max_timestamp(timestamps: List[Union[datetime, None]]) -> Union[datetime, No
     """
     valid_timestamps = [t for t in timestamps if t]
 
-    if len(valid_timestamps) <= 1:
+    if len(valid_timestamps) == 1:
         return valid_timestamps[0]
 
     if len(valid_timestamps) > 1:
