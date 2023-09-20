@@ -1,6 +1,7 @@
 import hashlib
 import logging
 import numpy as np
+import os
 import pandas as pd
 
 from datetime import date, datetime, timedelta
@@ -19,8 +20,10 @@ from app.extractors import (
     ThoughtRecord,
     SMQ
 )
+from app.settings import app_settings as settings
 from app.transformators import (
     calls_to_treatment_phase,
+    diary_entries_to_criterion,
     interactions_to_criterion,
     negative_registrations_to_criterion,
     planned_events_to_criterion,
@@ -32,6 +35,7 @@ from app.transformators import (
 
 
 logger = logging.getLogger(__name__)
+FILE_LOCATOR = settings.FILE_LOCATOR
 
 
 class Criteria:
@@ -109,11 +113,18 @@ class Criteria:
 
         return pd.DataFrame(criteria_data)
 
-    def _store(self, criteria) -> None:
+    def _store(self, criteria: pd.DataFrame) -> None:
         """
         Stores criteria data to remote database / local storage.
         """
-        pass
+        directory = f"{FILE_LOCATOR.criteria[FILE_LOCATOR.DIR]}/{str(self.for_date).replace('/', '-')}"
+        filename = FILE_LOCATOR.criteria[FILE_LOCATOR.FILENAME]
+
+        # Create directories if they don't exists locally
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+        criteria.to_csv(f"{directory}/{filename}", index=False)
 
     def _add_common_information(self, client: pd.Series, data: Dict) -> None:
         """
@@ -401,8 +412,29 @@ class Criteria:
         """
         logger.info(f"Add the completion status of the {client['client_id']} diary entries to the criteria data...")
 
-        # TODO: Assign criterium to the criteria data
-        data[Criteria.CODE_CRITERION_I].append(None)
+        timestamp = parse(f'{self.for_date.strftime("%Y-%m-%d")}T00:00:00')
+
+        # Filters thought records and theirs notification in the last seven days (1-7)
+        from_datetime = datetime.combine(timestamp - timedelta(days=7), datetime.max.time())
+        to_datetime = datetime.combine(timestamp, datetime.max.time())
+
+        # Filters thought records data.
+        diary_entries = self.diary_entries[
+            (self.diary_entries['client_id'] == client['client_id']) &
+            (self.diary_entries['start_time'] > from_datetime) &
+            (self.diary_entries['start_time'] <= to_datetime)
+        ]
+
+        # Filters notifications data.
+        notifications = self.notifications[
+            (self.notifications['client_id'] == client['client_id']) &
+            (self.notifications['type'] == 'diary_entry_log')
+        ]
+
+        # Append criterion `i`
+        data[Criteria.CODE_CRITERION_I].append(
+            diary_entries_to_criterion(diary_entries, notifications)
+        )
 
     def _compute_case_id(self, client_id: str, therapist_id: str) -> str:
         """
