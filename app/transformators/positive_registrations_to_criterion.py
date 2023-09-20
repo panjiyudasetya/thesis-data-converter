@@ -22,6 +22,7 @@ def positive_registrations_to_criterion(
 
     return _rate_to_criterion(rate * 100)
 
+
 def _total_pos_regs(trackers: pd.DataFrame) -> int:
     """
     Returns total positive registrations from the given trackers.

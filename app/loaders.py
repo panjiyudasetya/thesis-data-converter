@@ -318,7 +318,7 @@ class Criteria:
         logger.info(f"Add the completion status of the {client['client_id']} planned events to the criteria data...")
 
         timestamp = parse(f'{self.for_date.strftime("%Y-%m-%d")}T00:00:00')
-        
+
         # Filters events and their reflections in the last seven days (1-7)
         from_datetime = datetime.combine(timestamp - timedelta(days=7), datetime.max.time())
         to_datetime = datetime.combine(timestamp, datetime.max.time())

@@ -26,7 +26,7 @@ def to_dict(value: any) -> Union[Dict, any]:
     # When the incoming value is not string, return as it is.
     if not isinstance(value, str):
         return value
-    
+
     # Otherwise, try parse it to a dictionary.
     # * Clean the string value
     cleaned_value = value.replace('False', '"false"')\

@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 FILE_LOCATOR = settings.FILE_LOCATOR
 
 
-def download_tracer(response,  *args, **kwargs) -> None:
+def download_tracer(response, *args, **kwargs) -> None:
     """
     A hook function to print-out response from the download requests.
     """
@@ -58,7 +58,8 @@ class BaseAPI:
         path: str,
         session_id: str = '',
         payload: Union[Dict, List, None] = None,
-        custom_headers: Dict = {}) -> Response:
+        custom_headers: Dict = {}
+    ) -> Response:
         """
         Execute Metabase API requests.
         """

@@ -143,8 +143,8 @@ class CommonSetting:
     METABASE_SERVICE_ACCOUNT_PASSWORD = os.environ.get('METABASE_SERVICE_ACCOUNT_PASSWORD', '')
 
     # App variables
-    SECRET_KEY=os.environ.get('SECRET_KEY', '')
-    RUN_FOR_SPECIFIC_DATE=os.environ.get('RUN_FOR_SPECIFIC_DATE', '')
+    SECRET_KEY = os.environ.get('SECRET_KEY', '')
+    RUN_FOR_SPECIFIC_DATE = os.environ.get('RUN_FOR_SPECIFIC_DATE', '')
 
     FILE_LOCATOR = FileLocator()
 

@@ -118,7 +118,7 @@ class CustomTracker:
             }
         )
 
-        # The `start_time` column is a stringify date-time, 
+        # The `start_time` column is a stringify date-time,
         # and `parse_dates` property can't convert them automatically.
         # Therefore, we need to convert it to datetime object manually.
         df['start_time'] = pd.to_datetime(df['start_time'], format='ISO8601')
@@ -152,7 +152,7 @@ class DiaryEntry:
             }
         )
 
-        # The `start_time` column is a stringify date-time, 
+        # The `start_time` column is a stringify date-time,
         # and `parse_dates` property can't convert them automatically.
         # Therefore, we need to convert it to datetime object manually.
         df['start_time'] = pd.to_datetime(df['start_time'], format='ISO8601')
@@ -291,7 +291,7 @@ class ThoughtRecord:
             }
         )
 
-        # The `start_time` column is a stringify date-time, 
+        # The `start_time` column is a stringify date-time,
         # and `parse_dates` property can't convert them automatically.
         # Therefore, we need to convert it to datetime object manually.
         df['start_time'] = pd.to_datetime(df['start_time'], format='ISO8601')

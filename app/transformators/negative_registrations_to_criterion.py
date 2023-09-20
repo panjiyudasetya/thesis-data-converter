@@ -23,6 +23,7 @@ def negative_registrations_to_criterion(
 
     return _rate_to_criterion(rate * 100)
 
+
 def _total_neg_regs(trackers: pd.DataFrame) -> int:
     """
     Returns total negative registrations from the given trackers.
