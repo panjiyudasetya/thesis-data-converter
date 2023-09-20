@@ -127,7 +127,7 @@ class FileLocator:
         Returns dictionary of the file's location of the criteria data.
         """
         return {
-            FileLocator.DIR: 'input/',
+            FileLocator.DIR: 'outputs/',
             FileLocator.FILENAME: 'criteria.csv'
         }
 
