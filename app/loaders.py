@@ -25,7 +25,8 @@ from app.transformators import (
     negative_registrations_to_criterion,
     planned_events_to_criterion,
     positive_registrations_to_criterion,
-    registrations_to_criterion
+    registrations_to_criterion,
+    thought_records_to_criterion,
 )
 
 
@@ -352,8 +353,29 @@ class Criteria:
         """
         logger.info(f"Add the completion status of the {client['client_id']} thought records to the criteria data...")
 
-        # TODO: Assign criterium to the criteria data
-        data[Criteria.CODE_CRITERION_G].append(None)
+        timestamp = parse(f'{self.for_date.strftime("%Y-%m-%d")}T00:00:00')
+
+        # Filters thought records and theirs notification in the last seven days (1-7)
+        from_datetime = datetime.combine(timestamp - timedelta(days=7), datetime.max.time())
+        to_datetime = datetime.combine(timestamp, datetime.max.time())
+
+        # Filters thought records data.
+        thought_records = self.thought_records[
+            (self.thought_records['client_id'] == client['client_id']) &
+            (self.thought_records['start_time'] > from_datetime) &
+            (self.thought_records['start_time'] <= to_datetime)
+        ]
+
+        # Filters notifications data.
+        notifications = self.notifications[
+            (self.notifications['client_id'] == client['client_id']) &
+            (self.notifications['type'] == 'gscheme_log')
+        ]
+
+        # Append criterion `g`
+        data[Criteria.CODE_CRITERION_G].append(
+            thought_records_to_criterion(thought_records, notifications)
+        )
 
     def _add_smq_answers(self, client: pd.Series, data: Dict) -> None:
         """
