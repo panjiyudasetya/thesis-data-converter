@@ -23,6 +23,7 @@ from app.transformators import (
     calls_to_treatment_phase,
     interactions_to_criterion,
     negative_registrations_to_criterion,
+    positive_registrations_to_criterion,
     registrations_to_criterion
 )
 
@@ -282,8 +283,32 @@ class Criteria:
         """
         logger.info(f"Add {client['client_id']} rate of change of the positive registrations to the criteria data...")
 
-        # TODO: Assign criterium to the criteria data
-        data[Criteria.CODE_CRITERION_E].append(None)
+        timestamp = parse(f'{self.for_date.strftime("%Y-%m-%d")}T00:00:00')
+
+        # Filters custom trackers data from the last seven days (days 1-7)
+        from_datetime = datetime.combine(timestamp - timedelta(days=7), datetime.max.time())
+        to_datetime = datetime.combine(timestamp, datetime.max.time())
+
+        trackers_past_7d = self.custom_trackers[
+            (self.custom_trackers['client_id'] == client['client_id']) &
+            (self.custom_trackers['start_time'] > from_datetime) &
+            (self.custom_trackers['start_time'] <= to_datetime)
+        ]
+
+        # Filters custom trackers data from one week before the last seven days (days 8-14)
+        from_datetime = datetime.combine(timestamp - timedelta(days=14), datetime.max.time())
+        to_datetime = datetime.combine(timestamp - timedelta(days=7), datetime.max.time())
+
+        trackers_1w_before_past_7d = self.custom_trackers[
+            (self.custom_trackers['client_id'] == client['client_id']) &
+            (self.custom_trackers['start_time'] > from_datetime) &
+            (self.custom_trackers['start_time'] <= to_datetime)
+        ]
+
+        # Append criterion `e`
+        data[Criteria.CODE_CRITERION_E].append(
+            positive_registrations_to_criterion(trackers_past_7d, trackers_1w_before_past_7d)
+        )
 
     def _add_completion_of_planned_events(self, client: pd.Series, data: Dict) -> None:
         """
