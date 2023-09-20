@@ -23,6 +23,7 @@ from app.transformators import (
     calls_to_treatment_phase,
     interactions_to_criterion,
     negative_registrations_to_criterion,
+    planned_events_to_criterion,
     positive_registrations_to_criterion,
     registrations_to_criterion
 )
@@ -314,11 +315,34 @@ class Criteria:
         """
         Add the completion status of the `client`'s planned events to the criteria data.
         """
-        
         logger.info(f"Add the completion status of the {client['client_id']} planned events to the criteria data...")
 
-        # TODO: Assign criterium to the criteria data
-        data[Criteria.CODE_CRITERION_F].append(None)
+        timestamp = parse(f'{self.for_date.strftime("%Y-%m-%d")}T00:00:00')
+        
+        # Filters events and their reflections in the last seven days (1-7)
+        from_datetime = datetime.combine(timestamp - timedelta(days=7), datetime.max.time())
+        to_datetime = datetime.combine(timestamp, datetime.max.time())
+
+        # Filters planned events data.
+        events = self.events[
+            (self.events['client_id'] == client['client_id']) &
+            (self.events['start_time'] > from_datetime) &
+            (self.events['start_time'] <= to_datetime)
+        ]
+
+        # Filters event's reflections data.
+        events_reflections = self.events_reflections[
+            self.events_reflections['planned_event_id'].isin(events['id'].to_list())
+        ]
+        events_reflections = events_reflections[
+            (events_reflections['start_time'] > from_datetime) &
+            (events_reflections['start_time'] <= to_datetime)
+        ]
+
+        # Append criterion `f`
+        data[Criteria.CODE_CRITERION_F].append(
+            planned_events_to_criterion(events, events_reflections, from_datetime, to_datetime)
+        )
 
         return data
 
