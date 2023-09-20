@@ -228,8 +228,15 @@ class Criteria:
         """
         logger.info(f"Add {client['client_id']} total registrations of the custom trackers to the criteria data...")
 
-        # TODO: Assign criterium to the criteria data
-        data[Criteria.CODE_CRITERION_C].append(None)
+        # Filters custom trackers data.
+        custom_trackers = self.custom_trackers[
+            (self.custom_trackers['client_id'] == client['client_id']) &
+            (self.custom_trackers['start_time'] <= np.datetime64(str(self.for_date)))
+        ]
+
+        # Append criterion `c`
+        total_registrations = len(custom_trackers.index)
+        data[Criteria.CODE_CRITERION_C].append(total_registrations)
 
     def _add_rate_of_change_neg_regs(self, client: pd.Series, data: Dict) -> None:
         """
