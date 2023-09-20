@@ -1,6 +1,5 @@
 import pandas as pd
 
-from datetime import date
 
 from app.datasources.metabase import (
     ClientInfoAPI,
@@ -42,17 +41,14 @@ class MetabaseCollection:
 
 class ClientInfo:
 
-    def select_snapshot(self, date: date) -> pd.DataFrame:
+    def read_snapshot(self) -> pd.DataFrame:
         """
-        Selects snapshot of the clients data from local storage
-        that have been downloaded at the given `date`.
+        Selects snapshot of the clients data from the local storage.
         """
-        date_str = date.strftime("%Y-%m-%d")
-
         directory = f'{FILE_LOCATOR.clients[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.clients[FILE_LOCATOR.FILENAME]}'
 
-        path = f'{directory}/{date_str}/{filename}'
+        path = f'{directory}/{filename}'
 
         return pd.read_csv(
             path,
@@ -69,17 +65,14 @@ class ClientInfo:
 
 class Communication:
 
-    def select_snapshot(self, date: date) -> pd.DataFrame:
+    def read_snapshot(self) -> pd.DataFrame:
         """
-        Selects snapshot of the communication data from local storage
-        that have been downloaded at the given `date`.
+        Selects snapshot of the communication data from the local storage.
         """
-        date_str = date.strftime("%Y-%m-%d")
-
         directory = f'{FILE_LOCATOR.communications[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.communications[FILE_LOCATOR.FILENAME]}'
 
-        path = f'{directory}/{date_str}/{filename}'
+        path = f'{directory}/{filename}'
 
         return pd.read_csv(
             path,
@@ -95,17 +88,14 @@ class Communication:
 
 class CustomTracker:
 
-    def select_snapshot(self, date: date) -> pd.DataFrame:
+    def read_snapshot(self) -> pd.DataFrame:
         """
-        Selects snapshot of the custom trackers data from local storage
-        that have been downloaded at the given `date`.
+        Selects snapshot of the custom trackers data from the local storage.
         """
-        date_str = date.strftime("%Y-%m-%d")
-
         directory = f'{FILE_LOCATOR.custom_trackers[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.custom_trackers[FILE_LOCATOR.FILENAME]}'
 
-        path = f'{directory}/{date_str}/{filename}'
+        path = f'{directory}/{filename}'
 
         # Read dataframe
         df = pd.read_csv(
@@ -131,17 +121,14 @@ class CustomTracker:
 
 class DiaryEntry:
 
-    def select_snapshot(self, date: date) -> pd.DataFrame:
+    def read_snapshot(self) -> pd.DataFrame:
         """
-        Selects snapshot of the diary entries data from local storage
-        that have been downloaded at the given `date`.
+        Selects snapshot of the diary entries data from the local storage.
         """
-        date_str = date.strftime("%Y-%m-%d")
-
         directory = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.FILENAME]}'
 
-        path = f'{directory}/{date_str}/{filename}'
+        path = f'{directory}/{filename}'
 
         # Read dataframe
         df = pd.read_csv(
@@ -161,17 +148,14 @@ class DiaryEntry:
 
 class Notification:
 
-    def select_snapshot(self, date: date) -> pd.DataFrame:
+    def read_snapshot(self) -> pd.DataFrame:
         """
-        Selects snapshot of the notification data from local storage
-        that have been downloaded at the given `date`.
+        Selects snapshot of the notification data from the local storage.
         """
-        date_str = date.strftime("%Y-%m-%d")
-
         directory = f'{FILE_LOCATOR.notifications[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.notifications[FILE_LOCATOR.FILENAME]}'
 
-        path = f'{directory}/{date_str}/{filename}'
+        path = f'{directory}/{filename}'
 
         return pd.read_csv(
             path,
@@ -186,17 +170,14 @@ class Notification:
 
 class PlannedEvent:
 
-    def select_snapshot(self, date: date) -> pd.DataFrame:
+    def read_snapshot(self) -> pd.DataFrame:
         """
-        Selects snapshot of the planned event data from local storage
-        that have been downloaded at the given `date`.
+        Selects snapshot of the planned event data from the local storage.
         """
-        date_str = date.strftime("%Y-%m-%d")
-
         directory = f'{FILE_LOCATOR.events[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.events[FILE_LOCATOR.FILENAME]}'
 
-        path = f'{directory}/{date_str}/{filename}'
+        path = f'{directory}/{filename}'
 
         # Read dataframe
         df = pd.read_csv(
@@ -221,17 +202,14 @@ class PlannedEvent:
 
 class PlannedEventReflection:
 
-    def select_snapshot(self, date: date) -> pd.DataFrame:
+    def read_snapshot(self) -> pd.DataFrame:
         """
-        Selects snapshot of the planned event's reflections data from local storage
-        that have been downloaded at the given `date`.
+        Selects snapshot of the planned event's reflections data from the local storage.
         """
-        date_str = date.strftime("%Y-%m-%d")
-
         directory = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.FILENAME]}'
 
-        path = f'{directory}/{date_str}/{filename}'
+        path = f'{directory}/{filename}'
 
         return pd.read_csv(
             path,
@@ -246,17 +224,14 @@ class PlannedEventReflection:
 
 class TherapySession:
 
-    def select_snapshot(self, date: date) -> pd.DataFrame:
+    def read_snapshot(self) -> pd.DataFrame:
         """
-        Selects snapshot of the therapy session data from local storage
-        that have been downloaded at the given `date`.
+        Selects snapshot of the therapy session data from the local storage.
         """
-        date_str = date.strftime("%Y-%m-%d")
-
         directory = f'{FILE_LOCATOR.therapy_sessions[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.therapy_sessions[FILE_LOCATOR.FILENAME]}'
 
-        path = f'{directory}/{date_str}/{filename}'
+        path = f'{directory}/{filename}'
 
         return pd.read_csv(
             path,
@@ -270,17 +245,14 @@ class TherapySession:
 
 class ThoughtRecord:
 
-    def select_snapshot(self, date: date) -> pd.DataFrame:
+    def read_snapshot(self) -> pd.DataFrame:
         """
-        Selects snapshot of the thought records data from local storage
-        that have been downloaded at the given `date`.
+        Selects snapshot of the thought records data from the local storage.
         """
-        date_str = date.strftime("%Y-%m-%d")
-
         directory = f'{FILE_LOCATOR.thought_records[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.thought_records[FILE_LOCATOR.FILENAME]}'
 
-        path = f'{directory}/{date_str}/{filename}'
+        path = f'{directory}/{filename}'
 
         # Read dataframe
         df = pd.read_csv(
@@ -300,17 +272,15 @@ class ThoughtRecord:
 
 class SMQ:
 
-    def select_snapshot(self, date: date) -> pd.DataFrame:
+    def read_snapshot(self) -> pd.DataFrame:
         """
         Selects snapshot of the Session Measurement Questionnaires (SMQ)
-        data from local storage that have been downloaded at the given `date`.
+        data from the local storage.
         """
-        date_str = date.strftime("%Y-%m-%d")
-
         directory = f'{FILE_LOCATOR.smqs[FILE_LOCATOR.DIR]}'
         filename = f'{FILE_LOCATOR.smqs[FILE_LOCATOR.FILENAME]}'
 
-        path = f'{directory}/{date_str}/{filename}'
+        path = f'{directory}/{filename}'
 
         return pd.read_csv(
             path,
