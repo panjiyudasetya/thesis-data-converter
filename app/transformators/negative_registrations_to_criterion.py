@@ -15,8 +15,8 @@ def negative_registrations_to_criterion(
     - Safety behaviour tracker indicated by "value.boolean = True"
     - Any registrations from the worry tracker
     """
-    total_neg_regs_past_7d = _total_neg_regs(trackers_past_7d.copy())
-    total_neg_regs_1w_before_past_7d = _total_neg_regs(trackers_1w_before_past_7d.copy())
+    total_neg_regs_past_7d = _total_neg_regs(trackers_past_7d)
+    total_neg_regs_1w_before_past_7d = _total_neg_regs(trackers_1w_before_past_7d)
 
     # Compare those two values with this formula
     rate = (total_neg_regs_past_7d - total_neg_regs_1w_before_past_7d) / (total_neg_regs_1w_before_past_7d + 1)
@@ -28,12 +28,12 @@ def _total_neg_regs(trackers: pd.DataFrame) -> int:
     Returns total negative registrations from the given trackers.
     """
     # Get total negative avoidances
-    avoidances = trackers[(trackers['name'] == 'measure_avoidance')]
+    avoidances = trackers[(trackers['name'] == 'measure_avoidance')].copy(deep=True)
     avoidances['is_negative_reg'] = avoidances['value'].apply(lambda item: bool(item['boolean']))
     total_avoidance = len(avoidances[(avoidances['is_negative_reg'] == True)].index)
 
     # Get total negative safety behaviours
-    safety_behaviours = trackers[(trackers['name'] == 'measure_safety_behaviour')]
+    safety_behaviours = trackers[(trackers['name'] == 'measure_safety_behaviour')].copy(deep=True)
     safety_behaviours['is_negative_reg'] = safety_behaviours['value'].apply(lambda item: bool(item['boolean']))
     total_safety_behaviour = len(safety_behaviours[(safety_behaviours['is_negative_reg'] == True)].index)
 
