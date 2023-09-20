@@ -133,58 +133,12 @@ class Criteria:
         if not os.path.exists(directory):
             os.makedirs(directory)
 
-        criteria.to_csv(f"{directory}/{filename}", float_format='%g', index=False)
+        # Stores raw criteria dataset
+        criteria.to_csv(f"{directory}/all_{filename}", float_format='%g', index=False)
 
-    def _get_client_snapshots(self, client_id: str, start_time: date) -> List[datetime]:
-        """
-        Returns list of client's snapshots.
-        """
-        # Filters communication data to the audio/video calls.
-        calls = self.communications[
-            (self.communications['client_id'] == client_id) &
-            (self.communications['call_made'])
-        ]
-
-        # Sorts audio/video calls in ascending order
-        call_timestamps = calls['start_time'].sort_values().iloc[:]
-
-        # Ensures the given `start_time` is equals to the first time of the client's audio/video call
-        if call_timestamps.iloc[0] != start_time:
-            raise ValueError(f"Communications data error for client: {client_id}")
-
-        # Normally, clients does an online-treatment for 13 times to feel better.
-        # The first and second audio/video call aims to observe the client (intake sessions)
-        # and it doesn't counts as an online-treatment.
-        session_indexes = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-        snapshots = []
-
-        # Generates snapshots
-
-        PHASE_START = 0
-        PHASE_MID = 1
-        PHASE_END = 2
-
-        for session, timestamp in enumerate(call_timestamps):
-            # Validate session
-            if session not in session_indexes:
-                continue
-
-            # Client is in the beginning of treatment
-            if session <= 3:
-                treatment_phase = PHASE_START
-
-            # Client is in the middle of treatment
-            elif session <= 8:
-                treatment_phase = PHASE_MID
-
-            # Client is in the end of treatment
-            else:
-                treatment_phase = PHASE_END
-
-            snapshot = (treatment_phase, timestamp - timedelta(days=random.randint(0, 6)))
-            snapshots.append(snapshot)
-
-        return snapshots
+        # Stores criteria dataset for valid treatments
+        valid_criteria = criteria.groupby('client_id').filter(self._valid_treatments)
+        valid_criteria.to_csv(f"{directory}/valid_{filename}", float_format='%g', index=False)
 
     def _add_common_information(self, client: Dict, data: Dict) -> None:
         """
@@ -294,10 +248,14 @@ class Criteria:
         client_id = client['client_id']
         timestamp = client['timestamp']
 
-        # Filters custom trackers data.
+        # Filters custom trackers data in the last seven days (1-7)
+        from_datetime = datetime.combine(timestamp - timedelta(days=7), datetime.max.time())
+        to_datetime = datetime.combine(timestamp, datetime.max.time())
+
         custom_trackers = self.custom_trackers[
             (self.custom_trackers['client_id'] == client_id) &
-            (self.custom_trackers['start_time'] <= timestamp)
+            (self.custom_trackers['start_time'] > from_datetime) &
+            (self.custom_trackers['start_time'] <= to_datetime)
         ]
 
         # Append criterion `c`
@@ -492,6 +450,73 @@ class Criteria:
         data[Criteria.CODE_CRITERION_I].append(
             diary_entries_to_criterion(diary_entries, notifications)
         )
+
+    def _get_client_snapshots(self, client_id: str, start_time: date) -> List[datetime]:
+        """
+        Returns list of client's snapshots.
+        """
+        # Filters communication data to the audio/video calls.
+        calls = self.communications[
+            (self.communications['client_id'] == client_id) &
+            (self.communications['call_made'])
+        ]
+
+        # Sorts audio/video calls in ascending order
+        call_timestamps = calls['start_time'].sort_values().iloc[:]
+
+        # Ensures the given `start_time` is equals to the first time of the client's audio/video call
+        if call_timestamps.iloc[0] != start_time:
+            raise ValueError(f"Communications data error for client: {client_id}")
+
+        # Normally, clients does an online-treatment for 13 times to feel better.
+        # The first and second audio/video call aims to observe the client (intake sessions)
+        # and it doesn't counts as an online-treatment.
+        session_indexes = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+        snapshots = []
+
+        # Generates snapshots
+
+        PHASE_START = 0
+        PHASE_MID = 1
+        PHASE_END = 2
+
+        for session, timestamp in enumerate(call_timestamps):
+            # Validate session
+            if session not in session_indexes:
+                continue
+
+            # Client is in the beginning of treatment
+            if session <= 3:
+                treatment_phase = PHASE_START
+
+            # Client is in the middle of treatment
+            elif session <= 8:
+                treatment_phase = PHASE_MID
+
+            # Client is in the end of treatment
+            else:
+                treatment_phase = PHASE_END
+
+            snapshot = (treatment_phase, timestamp - timedelta(days=random.randint(0, 6)))
+            snapshots.append(snapshot)
+
+        return snapshots
+
+    def _valid_treatments(self, group: any) -> any:
+        """
+        Returns criteria condition of valid treatments.
+        """
+        condition = (
+            (
+                # Days since last contact
+                group[Criteria.CODE_CRITERION_A].max() <= 30 and
+                # Days since last registration
+                group[Criteria.CODE_CRITERION_B].max() <= 30 and
+                # No. of. custom trackers registrations in the past 7 days
+                group[Criteria.CODE_CRITERION_C].gt(0).sum() >= 2
+            )
+        )
+        return condition
 
     def _compute_case_id(self, client_id: str, therapist_id: str, timestamp: datetime) -> str:
         """
