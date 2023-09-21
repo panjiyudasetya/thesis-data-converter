@@ -69,6 +69,10 @@ class Criteria:
         and then stores them either to remote database or local storage.
         """
         criteria = self._create()
+
+        # Clean up criteria from duplicated rows
+        criteria = criteria.drop_duplicates()
+
         self._store(criteria)
 
     def _create(self) -> pd.DataFrame:
