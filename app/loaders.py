@@ -12,8 +12,7 @@ from app.extractors import (
     CustomTracker,
     DiaryEntry,
     Notification,
-    PlannedEvent,
-    PlannedEventReflection,
+    PlannedEventCompletion,
     TherapySession,
     ThoughtRecord,
     SMQ
@@ -57,8 +56,7 @@ class Criteria:
         self.custom_trackers = CustomTracker().read_snapshot()
         self.diary_entries = DiaryEntry().read_snapshot()
         self.notifications = Notification().read_snapshot()
-        self.events = PlannedEvent().read_snapshot()
-        self.events_reflections = PlannedEventReflection().read_snapshot()
+        self.events_completions = PlannedEventCompletion().read_snapshot()
         self.sessions = TherapySession().read_snapshot()
         self.thought_records = ThoughtRecord().read_snapshot()
         self.smqs = SMQ().read_snapshot()
@@ -333,29 +331,19 @@ class Criteria:
 
         logger.info(f"Add the completion status of the {client_id} planned events to the criteria data...")
 
-        # Filters events and their reflections in the last seven days (1-7)
+        # Filters planned event's completions in the last seven days (1-7)
         from_datetime = datetime.combine(snapshot_timestamp - timedelta(days=7), datetime.max.time())
         to_datetime = datetime.combine(snapshot_timestamp, datetime.max.time())
 
-        # Filters planned events data.
-        events = self.events[
-            (self.events['client_id'] == client_id) &
-            (self.events['start_time'] > from_datetime) &
-            (self.events['start_time'] <= to_datetime)
-        ]
-
-        # Filters event's reflections data.
-        events_reflections = self.events_reflections[
-            self.events_reflections['planned_event_id'].isin(events['id'].to_list())
-        ]
-        events_reflections = events_reflections[
-            (events_reflections['start_time'] > from_datetime) &
-            (events_reflections['start_time'] <= to_datetime)
+        events = self.events_completions[
+            (self.events_completions['client_id'] == client_id) &
+            (self.events_completions['start_time'] > from_datetime) &
+            (self.events_completions['start_time'] <= to_datetime)
         ]
 
         # Append criterion `f`
         data[Criteria.CODE_CRITERION_F].append(
-            planned_events_to_criterion(events, events_reflections, from_datetime, to_datetime)
+            planned_events_to_criterion(events)
         )
 
         return data
