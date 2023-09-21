@@ -21,7 +21,7 @@ def negative_registrations_to_criterion(
     # Compare those two values with this formula
     rate = (total_neg_regs_past_7d - total_neg_regs_1w_before_past_7d) / (total_neg_regs_1w_before_past_7d + 1)
 
-    return _rate_to_criterion(rate * 100)
+    return _to_criterion(rate * 100)
 
 
 def _total_neg_regs(trackers: pd.DataFrame) -> int:
@@ -45,9 +45,9 @@ def _total_neg_regs(trackers: pd.DataFrame) -> int:
     return total_avoidance + total_safety_behaviour + total_worry
 
 
-def _rate_to_criterion(percentage: int) -> int:
+def _to_criterion(percentage: int) -> int:
     """
-    Transforms the negative registration percentage into the Deeploy's criterion.
+    Transforms the percentage of negative registration into the Deeploy's criterion.
     """
     TYPE_DECREASE = 0
     TYPE_STABLE = 1

@@ -22,21 +22,21 @@ FILE_LOCATOR = settings.FILE_LOCATOR
 
 class MetabaseCollection:
 
-    def extract_all(self):
+    def collect_all(self):
         """
         Pulls all of collection data from Metabase
         and stores in the local storage.
         """
-        ClientInfoAPI().extract()
-        CommunicationAPI().extract()
-        CustomTrackerAPI().extract()
-        DiaryEntryAPI().extract()
-        NotificationAPI().extract()
-        PlannedEventAPI().extract()
-        PlannedEventReflectionAPI().extract()
-        TherapySessionAPI().extract()
-        ThoughtRecordAPI().extract()
-        SMQAPI().extract()
+        ClientInfoAPI().collect()
+        CommunicationAPI().collect()
+        CustomTrackerAPI().collect()
+        DiaryEntryAPI().collect()
+        NotificationAPI().collect()
+        PlannedEventAPI().collect()
+        PlannedEventReflectionAPI().collect()
+        TherapySessionAPI().collect()
+        ThoughtRecordAPI().collect()
+        SMQAPI().collect()
 
 
 class ClientInfo:

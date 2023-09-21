@@ -23,7 +23,7 @@ def planned_events_to_criterion(
     # Get total recurrent events.
     total_events = _total_recurrent_events(events.copy(), from_datetime, to_datetime)
 
-    return _total_registrations_to_criterion(total_events, total_completed_events)
+    return _to_criterion(total_events, total_completed_events)
 
 
 def _total_recurrent_events(events: pd.DataFrame, from_datetime: datetime, to_datetime: datetime) -> int:
@@ -61,7 +61,7 @@ def _events_between(from_datetime: datetime, to_datetime: datetime, rrule_str: s
     return _rrule.between(after=from_datetime, before=to_datetime, inc=True)
 
 
-def _total_registrations_to_criterion(total_event: int, total_completed: int) -> int:
+def _to_criterion(total_event: int, total_completed: int) -> int:
     """
     Transforms total registration into Deeploy's criterion.
     """
