@@ -68,8 +68,8 @@ class Criteria:
         """
         criteria = self._create()
 
-        # Clean up criteria from duplicated rows
-        criteria = criteria.drop_duplicates()
+        # Clean up criteria from duplicated rows and null values
+        criteria = criteria.drop_duplicates().dropna()
 
         self._store(criteria)
 

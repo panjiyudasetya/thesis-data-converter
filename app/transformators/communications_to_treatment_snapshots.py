@@ -81,7 +81,7 @@ def _to_client_treatment_lists(client: pd.Series, communications: pd.DataFrame) 
 
 def _make_snapshots_from(treatment: Dict) -> List[Dict]:
     """
-    Returns snapshots of the timestamps from 1 week before the treatment started.
+    Returns snapshots of the timestamps from 2 weeks before the treatment started.
     """
     return [
         _make_treatment(
@@ -90,7 +90,7 @@ def _make_snapshots_from(treatment: Dict) -> List[Dict]:
             treatment['treatment_timestamp'] - timedelta(days=day),
             deep_copy_series=True
         )
-        for day in range(0, 7)
+        for day in range(0, 14)
     ]
 
 
