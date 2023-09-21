@@ -1,5 +1,9 @@
+import logging
 import pandas as pd
 
+from datetime import datetime
+from dateutil.rrule import rrulestr
+from typing import List, Dict
 
 from app.datasources.metabase import (
     ClientInfoAPI,
@@ -17,6 +21,7 @@ from app.helpers import to_dict
 from app.settings import app_settings as settings
 
 
+logger = logging.getLogger(__name__)
 FILE_LOCATOR = settings.FILE_LOCATOR
 
 
@@ -220,6 +225,105 @@ class PlannedEventReflection:
             },
             parse_dates=['start_time']
         )
+
+
+class PlannedEventCompletion:
+
+    def read_snapshot(self) -> pd.DataFrame:
+        """
+        Generates planned event completion from the snapshots of the users, events,
+        and event's reflections data.
+        """
+        # Load required snapshots
+        clients = ClientInfo().read_snapshot()
+
+        events = PlannedEvent().read_snapshot()
+        events_reflections = PlannedEventReflection().read_snapshot()
+
+        # Merge events with clients to get client `start_time` and `end_time`
+        # that refers to when treatment is started / ended.
+        events = events.merge(clients, on='client_id', suffixes=('', '_client'))
+
+        # Filter out planned_events with start_time outside
+        # the client's `start_time` and `end_time` range.
+        current_date = settings.running_date()
+        events = events[
+            (events['start_time'] >= events['start_time_client']) &
+            (events['start_time'] <= events['end_time_client'])
+        ]
+
+        # Find the minimum date of when the recurrent event must stop.
+        events['calculated_end_time'] = self._coalesce(
+            events, ['terminated_time', 'end_time', 'end_time_client']
+        ).fillna(current_date)
+
+        events['calculated_end_time'] = events['calculated_end_time'] + pd.Timedelta(days=1)
+
+        # Create planned event completions dataframe.
+        data = self._create_event_completions_data(events, events_reflections)
+        events_completions = pd.DataFrame(data)
+
+        # Stores planned event completions to the local storage.
+        directory = f'{FILE_LOCATOR.event_completions[FILE_LOCATOR.DIR]}'
+        filename = f'{FILE_LOCATOR.event_completions[FILE_LOCATOR.FILENAME]}'
+
+        events_completions.to_csv(f'{directory}/{filename}', float_format='%g', index=False)
+
+        return events_completions
+
+    def _coalesce(self, df: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
+        """
+        Fills the NA/NaN values by using the next valid observation to fill the gap
+        and then returns all rows on the first column.
+        """
+        # Fills the NA/NaN values by using the next valid observation to fill the gap
+        df = df[columns].bfill(axis=1)
+
+        # Returns all rows on the first column
+        return df.iloc[:, 0]
+
+    def _create_event_completions_data(self, events, events_reflections) -> List[Dict]:
+        """
+        Creates planned events completions dataset.
+        """
+        events_completions = []
+        counter = 0
+
+        for _, event in events.iterrows():
+            if counter % 10 == 0:
+                logger.info(f"Generating planned event's completions {counter}/{len(events)}...")
+
+            counter += 1
+
+            rrule_str = event['recurring_expression']['rrule']
+            start_time = event['start_time']
+            end_time = event['calculated_end_time']
+
+            timestamps = rrulestr(rrule_str, dtstart=start_time).between(start_time, end_time, inc=True)
+
+            for timestamp in timestamps:
+                # Ignores the hours, minutes, and seconds of the instance time.
+                instance_date = datetime.combine(timestamp.date(), datetime.min.time())
+
+                # Filters event's reflections.
+                actual_event = events_reflections[
+                    (events_reflections['planned_event_id'] == event['id']) &
+                    (events_reflections['start_time'] == instance_date)
+                ]
+
+                if not actual_event.empty:
+                    status = actual_event.iloc[0]['status']
+                else:
+                    status = 'INCOMPLETED'
+
+                events_completions.append({
+                    'client_id': event['client_id'],
+                    'planned_event_id': event['id'],
+                    'start_time': instance_date,
+                    'status': status
+                })
+
+        return events_completions
 
 
 class TherapySession:

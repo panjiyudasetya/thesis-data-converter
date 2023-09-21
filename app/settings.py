@@ -92,6 +92,16 @@ class FileLocator:
         }
 
     @property
+    def event_completions(self) -> Dict:
+        """
+        Returns dictionary of the file's location of the event's completions data.
+        """
+        return {
+            FileLocator.DIR: f'{self.root_dir}',
+            FileLocator.FILENAME: 'planned_event_completions.csv'
+        }
+
+    @property
     def therapy_sessions(self) -> Dict:
         """
         Returns dictionary of the file's location of the client's therapy session data.
