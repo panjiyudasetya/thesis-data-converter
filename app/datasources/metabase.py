@@ -220,7 +220,7 @@ class ClientInfoAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the client's card.
     card_id = 2254
 
-    def collect(self, format='csv') -> None:
+    def download(self, format='csv') -> None:
         """
         Downloads client's information from Metabase in CSV format.
         """
@@ -239,7 +239,7 @@ class CommunicationAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the communication's card.
     card_id = 2243
 
-    def collect(self, format='csv') -> None:
+    def download(self, format='csv') -> None:
         """
         Downloads clients' communications from Metabase in CSV format.
         """
@@ -258,7 +258,7 @@ class CustomTrackerAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the client's custom-tracker card.
     card_id = 2248
 
-    def collect(self, format='csv') -> None:
+    def download(self, format='csv') -> None:
         """
         Downloads clients' custom trackers from Metabase in CSV format.
         """
@@ -277,7 +277,7 @@ class DiaryEntryAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the client's diary-entry card.
     card_id = 2244
 
-    def collect(self, format='csv') -> None:
+    def download(self, format='csv') -> None:
         """
         Downloads clients' diary entries from Metabase in CSV format.
         """
@@ -296,7 +296,7 @@ class NotificationAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the notification card.
     card_id = 2250
 
-    def collect(self, format='csv') -> None:
+    def download(self, format='csv') -> None:
         """
         Downloads notification data from Metabase in CSV format.
         """
@@ -315,7 +315,7 @@ class PlannedEventAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the planned events card.
     card_id = 2255
 
-    def collect(self, format='csv') -> None:
+    def download(self, format='csv') -> None:
         """
         Downloads planned events data from Metabase in CSV format.
         """
@@ -334,7 +334,7 @@ class PlannedEventReflectionAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the planned event's reflections card.
     card_id = 2256
 
-    def collect(self, format='csv') -> None:
+    def download(self, format='csv') -> None:
         """
         Downloads planned event's reflections data from Metabase in CSV format.
         """
@@ -353,7 +353,7 @@ class TherapySessionAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the therapy sessions card.
     card_id = 2258
 
-    def collect(self, format='csv') -> None:
+    def download(self, format='csv') -> None:
         """
         Downloads therapy sessions data from Metabase in CSV format.
         """
@@ -372,7 +372,7 @@ class ThoughtRecordAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the client's thought records card.
     card_id = 2245
 
-    def collect(self, format='csv') -> None:
+    def download(self, format='csv') -> None:
         """
         Downloads clients' thought records from Metabase in CSV format.
         """
@@ -391,7 +391,7 @@ class SMQAPI(MetabaseAPI):
     # Metabase collection's ID that refers to the Session Measurement Questionnaires (SMQ) card.
     card_id = 2251
 
-    def collect(self, format='csv') -> None:
+    def download(self, format='csv') -> None:
         """
         Downloads SMQ results from Metabase in CSV format.
         """

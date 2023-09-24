@@ -27,24 +27,30 @@ FILE_LOCATOR = settings.FILE_LOCATOR
 
 class MetabaseCollection:
 
-    def collect_all(self):
+    def downloads(self):
         """
         Pulls all of collection data from Metabase
         and stores in the local storage.
         """
-        ClientInfoAPI().collect()
-        CommunicationAPI().collect()
-        CustomTrackerAPI().collect()
-        DiaryEntryAPI().collect()
-        NotificationAPI().collect()
-        PlannedEventAPI().collect()
-        PlannedEventReflectionAPI().collect()
-        TherapySessionAPI().collect()
-        ThoughtRecordAPI().collect()
-        SMQAPI().collect()
+        ClientInfo().download()
+        Communication().download()
+        CustomTracker().download()
+        DiaryEntry().download()
+        Notification().download()
+        PlannedEvent().download()
+        PlannedEventReflection().download()
+        TherapySession().download()
+        ThoughtRecord().download()
+        SMQ().download()
 
 
 class ClientInfo:
+
+    def download(self):
+        """
+        Downloads clients' information from Metabase.
+        """
+        ClientInfoAPI().download()
 
     def read_snapshot(self) -> pd.DataFrame:
         """
@@ -70,6 +76,12 @@ class ClientInfo:
 
 class Communication:
 
+    def download(self):
+        """
+        Downloads clients' communications from Metabase.
+        """
+        CommunicationAPI().download()
+
     def read_snapshot(self) -> pd.DataFrame:
         """
         Selects snapshot of the communication data from the local storage.
@@ -92,6 +104,12 @@ class Communication:
 
 
 class CustomTracker:
+
+    def download(self):
+        """
+        Downloads clients' custom trackers from Metabase.
+        """
+        CustomTrackerAPI().download()
 
     def read_snapshot(self) -> pd.DataFrame:
         """
@@ -126,6 +144,12 @@ class CustomTracker:
 
 class DiaryEntry:
 
+    def download(self):
+        """
+        Downloads clients' diary entries from Metabase.
+        """
+        DiaryEntryAPI().download()
+
     def read_snapshot(self) -> pd.DataFrame:
         """
         Selects snapshot of the diary entries data from the local storage.
@@ -153,6 +177,12 @@ class DiaryEntry:
 
 class Notification:
 
+    def download(self):
+        """
+        Downloads notification data from Metabase.
+        """
+        NotificationAPI().download()
+
     def read_snapshot(self) -> pd.DataFrame:
         """
         Selects snapshot of the notification data from the local storage.
@@ -174,6 +204,12 @@ class Notification:
 
 
 class PlannedEvent:
+
+    def download(self):
+        """
+        Downloads planned events from Metabase.
+        """
+        PlannedEventAPI().download()
 
     def read_snapshot(self) -> pd.DataFrame:
         """
@@ -206,6 +242,12 @@ class PlannedEvent:
 
 
 class PlannedEventReflection:
+
+    def download(self):
+        """
+        Downloads planned event's reflections from Metabase.
+        """
+        PlannedEventReflectionAPI().download()
 
     def read_snapshot(self) -> pd.DataFrame:
         """
@@ -328,6 +370,12 @@ class PlannedEventCompletion:
 
 class TherapySession:
 
+    def download(self):
+        """
+        Downloads therapy sessions from Metabase.
+        """
+        TherapySessionAPI().download()
+
     def read_snapshot(self) -> pd.DataFrame:
         """
         Selects snapshot of the therapy session data from the local storage.
@@ -348,6 +396,12 @@ class TherapySession:
 
 
 class ThoughtRecord:
+
+    def download(self):
+        """
+        Downloads clients' thought records from Metabase.
+        """
+        ThoughtRecordAPI().download()
 
     def read_snapshot(self) -> pd.DataFrame:
         """
@@ -375,6 +429,12 @@ class ThoughtRecord:
 
 
 class SMQ:
+
+    def download(self):
+        """
+        Downloads SMQ results from Metabase.
+        """
+        SMQAPI().download()
 
     def read_snapshot(self) -> pd.DataFrame:
         """
