@@ -115,9 +115,10 @@ class Criteria:
         """
         Stores criteria data to remote database / local storage.
         """
+        directory, filename = FILE_LOCATOR.criteria
+
         running_date = str(settings.running_date())
-        directory = f"{FILE_LOCATOR.criteria[FILE_LOCATOR.DIR]}/{running_date.replace('/', '-')}"
-        filename = FILE_LOCATOR.criteria[FILE_LOCATOR.FILENAME]
+        directory = f"{directory}/{running_date.replace('/', '-')}"
 
         # Create directories if they don't exists locally
         if not os.path.exists(directory):

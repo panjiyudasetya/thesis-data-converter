@@ -226,8 +226,7 @@ class ClientInfoAPI(MetabaseAPI):
         """
         path = f'/card/{self.card_id}/query/{format}'
 
-        directory = f'{FILE_LOCATOR.clients[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.clients[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.clients
 
         save_to = f'{directory}/{filename}'
 
@@ -245,8 +244,7 @@ class CommunicationAPI(MetabaseAPI):
         """
         path = f'/card/{self.card_id}/query/{format}'
 
-        directory = f'{FILE_LOCATOR.communications[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.communications[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.communications
 
         save_to = f'{directory}/{filename}'
 
@@ -264,8 +262,7 @@ class CustomTrackerAPI(MetabaseAPI):
         """
         path = f'/card/{self.card_id}/query/{format}'
 
-        directory = f'{FILE_LOCATOR.custom_trackers[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.custom_trackers[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.custom_trackers
 
         save_to = f'{directory}/{filename}'
 
@@ -283,8 +280,7 @@ class DiaryEntryAPI(MetabaseAPI):
         """
         path = f'/card/{self.card_id}/query/{format}'
 
-        directory = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.diary_entries
 
         save_to = f'{directory}/{filename}'
 
@@ -302,8 +298,7 @@ class NotificationAPI(MetabaseAPI):
         """
         path = f'/card/{self.card_id}/query/{format}'
 
-        directory = f'{FILE_LOCATOR.notifications[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.notifications[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.notifications
 
         save_to = f'{directory}/{filename}'
 
@@ -321,8 +316,7 @@ class PlannedEventAPI(MetabaseAPI):
         """
         path = f'/card/{self.card_id}/query/{format}'
 
-        directory = f'{FILE_LOCATOR.events[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.events[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.events
 
         save_to = f'{directory}/{filename}'
 
@@ -340,8 +334,7 @@ class PlannedEventReflectionAPI(MetabaseAPI):
         """
         path = f'/card/{self.card_id}/query/{format}'
 
-        directory = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.event_reflections
 
         save_to = f'{directory}/{filename}'
 
@@ -359,8 +352,7 @@ class TherapySessionAPI(MetabaseAPI):
         """
         path = f'/card/{self.card_id}/query/{format}'
 
-        directory = f'{FILE_LOCATOR.therapy_sessions[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.therapy_sessions[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.therapy_sessions
 
         save_to = f'{directory}/{filename}'
 
@@ -378,8 +370,7 @@ class ThoughtRecordAPI(MetabaseAPI):
         """
         path = f'/card/{self.card_id}/query/{format}'
 
-        directory = f'{FILE_LOCATOR.thought_records[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.thought_records[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.thought_records
 
         save_to = f'{directory}/{filename}'
 
@@ -397,8 +388,7 @@ class SMQAPI(MetabaseAPI):
         """
         path = f'/card/{self.card_id}/query/{format}'
 
-        directory = f'{FILE_LOCATOR.smqs[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.smqs[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.smqs
 
         save_to = f'{directory}/{filename}'
 

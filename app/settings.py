@@ -4,7 +4,7 @@ import time
 
 from datetime import datetime
 from dotenv import load_dotenv
-from typing import Dict, Union
+from typing import Tuple, Union
 
 
 load_dotenv()
@@ -13,133 +13,95 @@ load_dotenv()
 class FileLocator:
     """
     A class that defines location map of the generated temporary files
-    of the XAI `app` project
+    of the `app` project
     """
-    DIR = 'DIRECTORY'
-    FILENAME = 'FILENAME'
 
     def __init__(self, root_dir: str = 'snapshots'):
         self.root_dir = root_dir
 
     @property
-    def clients(self) -> Dict:
+    def clients(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the user data.
+        Returns tuple of directory and filename of the user data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'users.csv'
-        }
+        return (f'{self.root_dir}', 'users.csv')
 
     @property
-    def communications(self) -> Dict:
+    def communications(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the client's communication data.
+        Returns tuple of directory and filename of the client's communication data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'communications.csv'
-        }
+        return (f'{self.root_dir}', 'communications.csv')
 
     @property
-    def custom_trackers(self) -> Dict:
+    def custom_trackers(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the client's custom tracker data.
+        Returns tuple of directory and filename of the client's custom tracker data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'custom_trackers.csv'
-        }
+        return (f'{self.root_dir}', 'custom_trackers.csv')
 
     @property
-    def diary_entries(self) -> Dict:
+    def diary_entries(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the client's diary entry data.
+        Returns tuple of directory and filename of the client's diary entry data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'diary_entries.csv'
-        }
+        return (f'{self.root_dir}', 'diary_entries.csv')
 
     @property
-    def notifications(self) -> Dict:
+    def notifications(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the notification data.
+        Returns tuple of directory and filename of the notification data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'notifications.csv'
-        }
+        return (f'{self.root_dir}', 'notifications.csv')
 
     @property
-    def events(self) -> Dict:
+    def events(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the planned events data.
+        Returns tuple of directory and filename of the planned events data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'planned_events.csv'
-        }
+        return (f'{self.root_dir}', 'planned_events.csv')
 
     @property
-    def event_reflections(self) -> Dict:
+    def event_reflections(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the planed event's reflections data.
+        Returns tuple of directory and filename of the planed event's reflections data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'planned_event_reflections.csv'
-        }
+        return (f'{self.root_dir}', 'planned_event_reflections.csv')
 
     @property
-    def event_completions(self) -> Dict:
+    def event_completions(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the event's completions data.
+        Returns tuple of directory and filename of the event's completions data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'planned_event_completions.csv'
-        }
+        return (f'{self.root_dir}', 'planned_event_completions.csv')
 
     @property
-    def therapy_sessions(self) -> Dict:
+    def therapy_sessions(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the client's therapy session data.
+        Returns tuple of directory and filename of the client's therapy session data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'therapy_sessions.csv'
-        }
+        return (f'{self.root_dir}', 'therapy_sessions.csv')
 
     @property
-    def thought_records(self) -> Dict:
+    def thought_records(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the client's thought record data.
+        Returns tuple of directory and filename of the client's thought record data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'thought_records.csv'
-        }
+        return (f'{self.root_dir}', 'thought_records.csv')
 
     @property
-    def smqs(self) -> Dict:
+    def smqs(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the SMQ data.
+        Returns tuple of directory and filename of the SMQ data.
         """
-        return {
-            FileLocator.DIR: f'{self.root_dir}',
-            FileLocator.FILENAME: 'smqs.csv'
-        }
+        return (f'{self.root_dir}', 'smqs.csv')
 
     @property
-    def criteria(self) -> Dict:
+    def criteria(self) -> Tuple:
         """
-        Returns dictionary of the file's location of the criteria data.
+        Returns tuple of directory and filename of the criteria data.
         """
-        return {
-            FileLocator.DIR: 'outputs/',
-            FileLocator.FILENAME: 'criteria.csv'
-        }
+        return ('outputs/', 'criteria.csv')
 
 
 class CommonSetting:

@@ -56,8 +56,7 @@ class ClientInfo:
         """
         Selects snapshot of the clients data from the local storage.
         """
-        directory = f'{FILE_LOCATOR.clients[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.clients[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.clients
 
         path = f'{directory}/{filename}'
 
@@ -86,8 +85,7 @@ class Communication:
         """
         Selects snapshot of the communication data from the local storage.
         """
-        directory = f'{FILE_LOCATOR.communications[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.communications[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.communications
 
         path = f'{directory}/{filename}'
 
@@ -115,8 +113,7 @@ class CustomTracker:
         """
         Selects snapshot of the custom trackers data from the local storage.
         """
-        directory = f'{FILE_LOCATOR.custom_trackers[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.custom_trackers[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.custom_trackers
 
         path = f'{directory}/{filename}'
 
@@ -154,8 +151,7 @@ class DiaryEntry:
         """
         Selects snapshot of the diary entries data from the local storage.
         """
-        directory = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.diary_entries[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.diary_entries
 
         path = f'{directory}/{filename}'
 
@@ -187,8 +183,7 @@ class Notification:
         """
         Selects snapshot of the notification data from the local storage.
         """
-        directory = f'{FILE_LOCATOR.notifications[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.notifications[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.notifications
 
         path = f'{directory}/{filename}'
 
@@ -215,8 +210,7 @@ class PlannedEvent:
         """
         Selects snapshot of the planned event data from the local storage.
         """
-        directory = f'{FILE_LOCATOR.events[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.events[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.events
 
         path = f'{directory}/{filename}'
 
@@ -253,8 +247,7 @@ class PlannedEventReflection:
         """
         Selects snapshot of the planned event's reflections data from the local storage.
         """
-        directory = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.event_reflections[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.event_reflections
 
         path = f'{directory}/{filename}'
 
@@ -306,8 +299,7 @@ class PlannedEventCompletion:
         events_completions = pd.DataFrame(data)
 
         # Stores planned event completions to the local storage.
-        directory = f'{FILE_LOCATOR.event_completions[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.event_completions[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.event_completions
 
         events_completions.to_csv(f'{directory}/{filename}', float_format='%g', index=False)
 
@@ -380,8 +372,7 @@ class TherapySession:
         """
         Selects snapshot of the therapy session data from the local storage.
         """
-        directory = f'{FILE_LOCATOR.therapy_sessions[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.therapy_sessions[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.therapy_sessions
 
         path = f'{directory}/{filename}'
 
@@ -407,8 +398,7 @@ class ThoughtRecord:
         """
         Selects snapshot of the thought records data from the local storage.
         """
-        directory = f'{FILE_LOCATOR.thought_records[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.thought_records[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.thought_records
 
         path = f'{directory}/{filename}'
 
@@ -441,8 +431,7 @@ class SMQ:
         Selects snapshot of the Session Measurement Questionnaires (SMQ)
         data from the local storage.
         """
-        directory = f'{FILE_LOCATOR.smqs[FILE_LOCATOR.DIR]}'
-        filename = f'{FILE_LOCATOR.smqs[FILE_LOCATOR.FILENAME]}'
+        directory, filename = FILE_LOCATOR.smqs
 
         path = f'{directory}/{filename}'
 
