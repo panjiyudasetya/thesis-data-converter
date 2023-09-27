@@ -30,12 +30,12 @@ def _total_pos_regs(trackers: pd.DataFrame) -> int:
     # Get total positive avoidances
     avoidances = trackers[(trackers['name'] == 'measure_avoidance')].copy(deep=True)
     avoidances['is_negative_reg'] = avoidances['value'].apply(lambda item: bool(item['boolean']))
-    total_avoidance = len(avoidances[(avoidances['is_negative_reg'] == False)].index)
+    total_avoidance = len(avoidances[~(avoidances['is_negative_reg'])].index)
 
     # Get total positive safety behaviours
     safety_behaviours = trackers[(trackers['name'] == 'measure_safety_behaviour')].copy(deep=True)
     safety_behaviours['is_negative_reg'] = safety_behaviours['value'].apply(lambda item: bool(item['boolean']))
-    total_safety_behaviour = len(safety_behaviours[(safety_behaviours['is_negative_reg'] == False)].index)
+    total_safety_behaviour = len(safety_behaviours[~(safety_behaviours['is_negative_reg'])].index)
 
     return total_avoidance + total_safety_behaviour
 
