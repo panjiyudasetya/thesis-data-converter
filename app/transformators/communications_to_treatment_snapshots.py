@@ -21,7 +21,8 @@ def communications_to_treatment_snapshots(
     communications: pd.DataFrame
 ) -> List[Dict]:
     """
-    Transforms the clients and their communications data into the list of treatment's snapshots.
+    Transforms the clients and their communications data
+    into the time series before the first treatment is occurred.
     """
     client_treatment_lists = [
         _to_client_treatment_lists(client, communications)
@@ -29,11 +30,11 @@ def communications_to_treatment_snapshots(
     ]
     client_treatments = list(itertools.chain(*client_treatment_lists))
 
-    snapshot_treatment_lists = [
-        _make_snapshots_from(treatment)
+    snapshot_lists = [
+        _create_snapshots_from(treatment, days_before=14)
         for treatment in client_treatments
     ]
-    return list(itertools.chain(*snapshot_treatment_lists))
+    return list(itertools.chain(*snapshot_lists))
 
 
 def _to_client_treatment_lists(client: pd.Series, communications: pd.DataFrame) -> List[Dict]:
@@ -51,10 +52,13 @@ def _to_client_treatment_lists(client: pd.Series, communications: pd.DataFrame) 
 
     # Ensures the first timestamp of the client's audio/video call
     # equals to the timestamp of the client's first call (defined as `start_time`).
-    if call_timestamps.iloc[0] != client['start_time']:
+    first_call_date = call_timestamps.iloc[0]
+    first_treatment_date = client['start_time']
+
+    if first_call_date != first_treatment_date:
         raise ValueError(f"Communications data error for client: {client['client_id']}")
 
-    # Generates client's treatments
+    # Generates state of the client's treatment.
     client_treatments = []
 
     for treatment, timestamp in enumerate(call_timestamps):
@@ -74,34 +78,35 @@ def _to_client_treatment_lists(client: pd.Series, communications: pd.DataFrame) 
         else:
             phase = TREATMENT__PHASE_END
 
-        client_treatments.append(_make_treatment(client, phase, timestamp))
+        client_treatments.append(_treatment_state_from(client, phase, timestamp))
 
     return client_treatments
 
 
-def _make_snapshots_from(treatment: Dict) -> List[Dict]:
+def _create_snapshots_from(treatment: Dict, days_before: int) -> List[Dict]:
     """
-    Returns snapshots of the timestamps from 2 weeks before the treatment started.
+    Returns snapshots of the client's treatment from the day(s)
+    before the `treatment` is started.
     """
     return [
-        _make_treatment(
+        _treatment_state_from(
             treatment['client_info'],
             treatment['treatment_phase'],
-            treatment['treatment_timestamp'] - timedelta(days=day),
+            treatment['treatment_timestamp'] - pd.Timedelta(days=day),
             deep_copy_series=True
         )
-        for day in range(0, 14)
+        for day in range(0, days_before)
     ]
 
 
-def _make_treatment(
+def _treatment_state_from(
     client_info: pd.Series,
     treatment_phase: int,
     treatment_timestamp: datetime,
     deep_copy_series: bool = False
 ) -> Dict:
     """
-    Makes treatment dictionary from the given values.
+    Returns the state of the client's treatment from the given values.
     """
     return {
         'client_info': client_info if not deep_copy_series else client_info.copy(deep=True),
