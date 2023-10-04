@@ -27,10 +27,10 @@ FILE_LOCATOR = settings.FILE_LOCATOR
 
 class MetabaseCollection:
 
-    def downloads(self):
+    def download(self):
         """
         Pulls all of collection data from Metabase
-        and stores in the local storage.
+        and stores them in the local storage.
         """
         ClientInfo().download()
         Communication().download()
