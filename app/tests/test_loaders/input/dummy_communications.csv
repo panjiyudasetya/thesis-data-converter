@@ -1,0 +1,14 @@
+client_id,start_time,call_made,chat_msg_sent
+C1,2022-07-21,true,true
+C1,2022-08-18,true,true
+C1,2022-08-19,false,true
+C1,2022-08-23,false,true
+C1,2022-08-25,true,false
+C1,2022-09-06,true,true
+C1,2022-09-13,true,false
+C1,2022-09-22,true,false
+C1,2022-10-04,true,true
+C1,2022-10-11,true,false
+C1,2022-10-21,true,true
+C1,2022-11-01,true,true
+C1,2022-11-15,true,true

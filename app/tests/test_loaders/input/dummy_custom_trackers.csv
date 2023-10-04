@@ -1,0 +1,226 @@
+client_id,start_time,name,value
+C1,2022-11-13T10:37:13.35,measure_worry,"{""duration"": 2400}"
+C1,2022-11-13T10:59:10.924,measure_worry,{}
+C1,2022-11-13T11:00:19.734,measure_worry,{}
+C1,2022-11-13T11:00:34.941,measure_worry,{}
+C1,2022-11-14T08:38:32.528,measure_worry,{}
+C1,2022-11-14T08:38:50.071,measure_worry,{}
+C1,2022-11-14T08:39:26.037,measure_worry,{}
+C1,2022-11-24T09:21:09.245,measure_worry,"{""duration"": 18000}"
+C1,2022-11-27T10:54:42.773,measure_worry,{}
+C1,2022-11-27T11:01:39.801,measure_worry,{}
+C1,2022-11-27T11:08:38.143,measure_worry,{}
+C1,2022-11-28T10:35:34.528,measure_worry,{}
+C1,2022-12-03T09:10:39.196,measure_worry,{}
+C1,2022-12-04T19:13:17.566,measure_worry,{}
+C1,2022-12-04T19:28:31.781,measure_worry,{}
+C1,2022-12-04T19:48:06.004,measure_worry,{}
+C1,2022-12-04T20:13:46.907,measure_worry,{}
+C1,2022-12-04T20:48:17.17,measure_worry,"{""duration"": 10800}"
+C1,2022-12-06T14:35:05.474,measure_worry,"{""duration"": 7200}"
+C1,2022-12-06T14:40:11.437,measure_worry,"{""duration"": 10800}"
+C1,2022-12-07T07:04:09.918,measure_worry,"{""duration"": 7200}"
+C1,2022-12-08T07:13:20.905,measure_worry,"{""duration"": 7200}"
+C1,2022-12-12T11:30:32.504,measure_worry,"{""duration"": 7200}"
+C1,2022-12-12T11:38:51.499,measure_worry,"{""duration"": 10800}"
+C1,2022-12-12T11:48:03.853,measure_worry,"{""duration"": 7200}"
+C1,2022-12-12T11:52:25.765,measure_worry,{}
+C1,2022-12-13T20:38:40.188,measure_worry,"{""duration"": 7200}"
+C1,2022-12-17T15:59:54.337,measure_worry,{}
+C1,2022-12-17T16:13:46.53,measure_worry,"{""duration"": 10800}"
+C1,2022-12-17T16:24:50.293,measure_worry,{}
+C1,2022-12-17T16:31:33.197,measure_worry,{}
+C1,2022-12-18T11:28:38.805,measure_worry,"{""duration"": 14400}"
+C1,2022-12-19T14:44:00.76,measure_worry,{}
+C1,2022-12-21T21:20:43.494,measure_worry,"{""duration"": 10800}"
+C1,2022-12-21T21:27:06.185,measure_worry,{}
+C1,2022-12-23T19:45:36.56,measure_worry,"{""duration"": 7200}"
+C1,2022-12-23T19:54:05.942,measure_worry,"{""duration"": 7200}"
+C1,2022-12-27T08:50:48.76,measure_worry,{}
+C1,2022-12-27T10:52:47.846,measure_worry,"{""duration"": 18000}"
+C1,2022-12-30T20:31:55.103,measure_worry,{}
+C1,2022-12-30T20:39:11.633,measure_worry,{}
+C1,2022-12-30T20:48:44.409,measure_worry,{}
+C1,2022-12-30T21:12:28.889,measure_worry,{}
+C1,2022-12-30T21:17:28.722,measure_worry,{}
+C1,2022-12-30T21:22:18.905,measure_worry,{}
+C1,2023-01-01T20:57:31.261,measure_worry,{}
+C1,2023-01-03T18:08:34.677,measure_worry,{}
+C1,2023-01-03T18:20:01.096,measure_worry,{}
+C1,2023-01-06T12:39:55.232,measure_worry,{}
+C1,2023-01-06T12:51:06.267,measure_worry,{}
+C1,2023-01-06T15:45:39.778,measure_worry,{}
+C1,2023-01-07T19:01:37.07,measure_worry,{}
+C1,2023-01-09T08:01:04.373,measure_worry,{}
+C1,2023-01-11T13:29:13.703,measure_worry,{}
+C1,2023-01-11T13:37:26.58,measure_worry,{}
+C1,2023-01-11T13:43:24.113,measure_worry,{}
+C1,2023-01-15T13:59:44.405,measure_worry,{}
+C1,2023-01-15T14:10:55.342,measure_worry,{}
+C1,2023-01-15T14:26:08.526,measure_worry,{}
+C1,2023-01-17T18:24:51.421,measure_worry,{}
+C1,2023-01-17T18:33:45.367,measure_worry,{}
+C1,2023-01-19T09:39:17.463,measure_worry,"{""duration"": 18000}"
+C1,2023-01-19T09:45:18.235,measure_worry,"{""duration"": 10800}"
+C1,2023-01-22T08:35:09.541,measure_worry,"{""duration"": 14400}"
+C1,2023-01-27T14:04:18.016,measure_worry,{}
+C1,2023-01-22T08:44:13.129,measure_worry,{}
+C1,2023-01-22T19:04:57.424,measure_worry,{}
+C1,2023-01-22T19:05:09.563,measure_worry,{}
+C1,2023-01-27T13:56:27.688,measure_worry,{}
+C1,2023-01-27T14:16:45.355,measure_worry,{}
+C1,2023-01-27T14:25:23.923,measure_worry,{}
+C1,2023-01-27T14:33:38.898,measure_worry,{}
+C1,2023-01-29T18:26:50.199,measure_worry,{}
+C1,2023-01-29T18:34:39.546,measure_worry,{}
+C1,2023-01-30T20:38:05.944,measure_worry,{}
+C1,2023-01-31T07:51:24.505,measure_worry,{}
+C1,2023-02-02T11:24:05.27,measure_worry,{}
+C1,2023-02-03T20:15:51.721,measure_worry,{}
+C1,2023-02-03T20:22:22.607,measure_worry,{}
+C1,2023-02-05T15:46:53.278,measure_worry,{}
+C1,2023-02-05T16:04:32.857,measure_worry,{}
+C1,2023-02-09T15:50:31.128,measure_worry,{}
+C1,2023-02-09T16:01:15.649,measure_worry,{}
+C1,2023-02-09T16:09:22.872,measure_worry,{}
+C1,2023-02-09T16:22:07.341,measure_worry,{}
+C1,2023-02-11T08:27:38.591,measure_worry,{}
+C1,2023-02-13T09:53:50.34,measure_worry,{}
+C1,2023-02-13T10:04:51.604,measure_worry,{}
+C1,2023-02-13T10:16:11.402,measure_worry,{}
+C1,2023-02-16T11:26:54.585,measure_worry,{}
+C1,2023-02-16T13:23:00.666,measure_worry,{}
+C1,2023-02-16T13:34:29.323,measure_worry,{}
+C1,2023-02-17T11:51:03.304,measure_worry,"{""duration"": 10800}"
+C1,2023-02-21T20:18:44.42,measure_worry,{}
+C1,2023-02-21T20:28:52.753,measure_worry,{}
+C1,2023-02-21T20:36:46.016,measure_worry,"{""duration"": 10800}"
+C1,2023-02-21T20:47:22.685,measure_worry,{}
+C1,2023-02-23T16:03:36.584,measure_worry,{}
+C1,2023-02-23T16:13:28.751,measure_worry,{}
+C1,2023-02-25T15:25:49.583,measure_worry,{}
+C1,2023-02-26T18:38:22.135,measure_worry,{}
+C1,2023-02-26T18:48:58.784,measure_worry,{}
+C1,2023-02-27T15:03:16.344,measure_worry,{}
+C1,2023-02-28T07:31:22.579,measure_worry,{}
+C1,2023-03-02T13:57:04.875,measure_worry,"{""duration"": 7200}"
+C1,2023-03-02T14:03:52.773,measure_worry,{}
+C1,2023-03-03T12:56:38.632,measure_worry,{}
+C1,2023-03-05T13:23:45.421,measure_worry,"{""duration"": 7200}"
+C1,2023-03-05T13:33:53.975,measure_worry,"{""duration"": 7200}"
+C1,2023-03-06T11:10:38.901,measure_worry,"{""duration"": 7200}"
+C1,2023-03-11T21:34:36.798,measure_worry,{}
+C1,2023-03-12T16:53:55.708,measure_worry,"{""duration"": 21600}"
+C1,2023-03-12T17:10:11.365,measure_worry,"{""duration"": 14400}"
+C1,2023-03-12T17:13:59.414,measure_worry,{}
+C1,2023-03-12T17:26:06.616,measure_worry,{}
+C1,2023-03-13T17:55:45.006,measure_worry,"{""duration"": 10800}"
+C1,2023-03-14T17:50:02.388,measure_worry,{}
+C1,2023-03-16T18:41:15.728,measure_worry,{}
+C1,2023-03-16T18:51:37.872,measure_worry,{}
+C1,2023-03-19T10:00:51.518,measure_worry,{}
+C1,2023-03-19T10:08:00.914,measure_worry,"{""duration"": 7200}"
+C1,2023-03-19T10:14:08.739,measure_worry,{}
+C1,2023-03-20T20:26:59.711,measure_worry,{}
+C1,2023-03-20T20:33:41.58,measure_worry,{}
+C1,2023-03-23T09:45:29.163,measure_worry,"{""duration"": 10800}"
+C1,2023-03-23T15:57:24.706,measure_worry,{}
+C1,2023-03-27T11:21:40.257,measure_worry,"{""duration"": 14400}"
+C1,2023-03-27T11:33:29.069,measure_worry,"{""duration"": 14400}"
+C1,2023-03-27T11:43:31.416,measure_worry,"{""duration"": 14400}"
+C1,2023-03-27T16:32:39.532,measure_worry,{}
+C1,2023-03-29T05:54:44.666,measure_worry,{}
+C1,2023-03-31T12:46:44.24,measure_worry,{}
+C1,2023-03-31T12:58:26.316,measure_worry,{}
+C1,2023-04-02T11:44:45.805,measure_worry,{}
+C1,2023-04-03T05:59:28.23,measure_worry,{}
+C1,2023-04-03T16:57:58.465,measure_worry,{}
+C1,2023-04-04T05:47:14.4,measure_worry,{}
+C1,2023-04-04T20:50:46.645,measure_worry,{}
+C1,2023-04-04T20:51:04.296,measure_worry,{}
+C1,2023-04-06T12:48:13.781,measure_worry,{}
+C1,2023-04-10T05:34:40.385,measure_worry,{}
+C1,2023-04-10T05:42:33.958,measure_worry,"{""duration"": 28800}"
+C1,2023-04-11T16:43:11.975,measure_worry,"{""duration"": 28800}"
+C1,2023-04-13T08:24:36.169,measure_worry,"{""duration"": 28800}"
+C1,2023-04-13T08:30:48.238,measure_worry,{}
+C1,2023-04-17T06:15:50.102,measure_worry,"{""duration"": 28800}"
+C1,2023-04-19T19:28:03.541,measure_worry,"{""duration"": 28800}"
+C1,2023-04-19T19:42:13.62,measure_worry,{}
+C1,2023-04-19T19:53:51.351,measure_worry,"{""duration"": 28800}"
+C1,2023-04-19T20:22:59.696,measure_worry,{}
+C1,2023-04-19T20:27:37.402,measure_worry,"{""duration"": 28800}"
+C1,2023-04-21T10:46:33.109,measure_worry,"{""duration"": 28800}"
+C1,2023-04-21T10:53:26.127,measure_worry,"{""duration"": 28800}"
+C1,2023-04-23T20:20:18.874,measure_worry,"{""duration"": 28800}"
+C1,2023-04-23T20:30:18.987,measure_worry,{}
+C1,2023-04-23T20:42:28.958,measure_worry,{}
+C1,2023-04-25T09:02:18.882,measure_worry,{}
+C1,2023-04-28T17:10:45.29,measure_worry,{}
+C1,2023-04-28T17:19:58.512,measure_worry,{}
+C1,2023-04-28T17:31:00.928,measure_worry,{}
+C1,2023-05-01T20:24:57.232,measure_worry,{}
+C1,2023-05-03T19:55:46.731,measure_worry,{}
+C1,2023-05-05T05:07:41.942,measure_worry,{}
+C1,2023-05-05T05:14:59.902,measure_worry,{}
+C1,2023-05-05T05:24:21.63,measure_worry,{}
+C1,2023-05-05T05:31:11.551,measure_worry,{}
+C1,2023-05-05T05:36:55.253,measure_worry,{}
+C1,2023-05-08T12:47:58.402,measure_worry,{}
+C1,2023-05-08T12:57:34.111,measure_worry,{}
+C1,2023-05-08T13:03:50.42,measure_worry,{}
+C1,2023-05-10T20:38:36.114,measure_worry,{}
+C1,2023-05-10T20:54:44.812,measure_worry,{}
+C1,2023-05-13T07:25:06.992,measure_worry,{}
+C1,2023-05-18T08:54:02.012,measure_worry,{}
+C1,2023-05-14T19:40:24.802,measure_worry,{}
+C1,2023-05-14T19:47:41.392,measure_worry,{}
+C1,2023-05-16T20:07:31.568,measure_worry,{}
+C1,2023-05-16T20:15:09.413,measure_worry,{}
+C1,2023-05-16T20:22:19.109,measure_worry,{}
+C1,2023-05-20T19:45:33.74,measure_worry,{}
+C1,2023-05-20T20:05:27.844,measure_worry,{}
+C1,2023-05-20T20:13:08.311,measure_worry,{}
+C1,2023-05-23T20:23:24.429,measure_worry,{}
+C1,2023-05-23T20:36:47.339,measure_worry,{}
+C1,2023-05-23T20:46:07.288,measure_worry,{}
+C1,2023-05-25T05:41:02.182,measure_worry,{}
+C1,2023-05-25T20:44:23.411,measure_worry,{}
+C1,2023-05-30T05:58:45.397,measure_worry,{}
+C1,2023-05-30T06:07:41.585,measure_worry,{}
+C1,2023-05-31T05:07:56.536,measure_worry,{}
+C1,2023-05-31T05:19:59.719,measure_worry,{}
+C1,2023-06-01T20:28:18.188,measure_worry,{}
+C1,2023-06-03T14:53:37.212,measure_worry,{}
+C1,2023-06-03T15:05:30.24,measure_worry,{}
+C1,2023-06-04T06:22:11.042,measure_worry,{}
+C1,2023-06-07T05:28:22.839,measure_worry,{}
+C1,2023-06-07T18:47:10.17,measure_worry,{}
+C1,2023-06-08T17:50:59.191,measure_worry,{}
+C1,2023-06-08T18:08:32.591,measure_worry,{}
+C1,2023-06-11T10:29:18.987,measure_worry,{}
+C1,2023-06-11T10:49:34.365,measure_worry,"{""duration"": 36000}"
+C1,2023-06-11T11:13:20.411,measure_worry,"{""duration"": 36000}"
+C1,2023-06-13T10:12:16.192,measure_worry,"{""duration"": 36000}"
+C1,2023-06-13T10:25:46.497,measure_worry,"{""duration"": 36000}"
+C1,2023-06-14T05:10:11.439,measure_worry,"{""duration"": 36000}"
+C1,2023-06-16T15:03:38.5,measure_worry,{}
+C1,2023-06-16T15:17:14.737,measure_worry,{}
+C1,2023-06-19T05:06:03.667,measure_worry,{}
+C1,2023-06-19T05:21:35.52,measure_worry,"{""duration"": 36000}"
+C1,2023-06-20T07:31:35.235,measure_worry,{}
+C1,2023-06-20T07:52:25.937,measure_worry,{}
+C1,2023-06-22T11:07:27.805,measure_worry,{}
+C1,2023-06-22T11:22:18.547,measure_worry,{}
+C1,2023-06-24T05:48:20.435,measure_worry,{}
+C1,2023-06-24T05:57:13.371,measure_worry,{}
+C1,2023-06-25T18:58:32.604,measure_worry,{}
+C1,2023-06-28T18:56:22.873,measure_worry,{}
+C1,2023-06-28T19:19:54.796,measure_worry,{}
+C1,2023-06-29T06:20:08.779,measure_worry,{}
+C1,2023-07-03T14:01:57.092,measure_worry,{}
+C1,2023-07-03T14:09:58.081,measure_worry,{}
+C1,2023-07-03T14:24:49.662,measure_worry,{}
+C1,2023-07-03T14:30:49.63,measure_worry,{}
+C1,2023-07-03T14:37:51.711,measure_worry,{}
+C1,2023-07-04T05:31:43.186,measure_worry,{}
