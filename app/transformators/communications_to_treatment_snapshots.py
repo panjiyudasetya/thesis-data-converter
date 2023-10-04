@@ -25,7 +25,7 @@ def communications_to_treatment_snapshots(
     into the time series before the first treatment is occurred.
     """
     client_treatment_lists = [
-        _to_client_treatment_lists(client, communications)
+        _to_client_treatments(client, communications)
         for _, client in clients.iterrows()
     ]
     client_treatments = list(itertools.chain(*client_treatment_lists))
@@ -37,7 +37,7 @@ def communications_to_treatment_snapshots(
     return list(itertools.chain(*snapshot_lists))
 
 
-def _to_client_treatment_lists(client: pd.Series, communications: pd.DataFrame) -> List[Dict]:
+def _to_client_treatments(client: pd.Series, communications: pd.DataFrame) -> List[Dict]:
     """
     Returns the list of client's treatments.
     """
