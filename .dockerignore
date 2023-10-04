@@ -1,0 +1,11 @@
+.vscode/
+.venv/
+
+.git
+.gitignore
+
+Dockerfile
+docker-compose.yml
+
+outputs/
+snapshots/
