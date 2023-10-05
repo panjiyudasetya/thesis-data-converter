@@ -148,6 +148,7 @@ class Development(CommonSetting):
     """
     The class settings to run the `app` converter in local environment.
     """
+    USE_REMOTE_DATA = False
 
     def __init__(self) -> None:
         # Decrease minimum modify app log level into the `INFO` flag.
@@ -159,7 +160,7 @@ class Production(CommonSetting):
     """
     The class settings to run the `app` converter in production environment.
     """
-    pass
+    USE_REMOTE_DATA = True
 
 
 #
