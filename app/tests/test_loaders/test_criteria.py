@@ -3,6 +3,7 @@ import os
 import pandas as pd
 import warnings
 
+from dateutil.parser import parse
 from unittest import (
     mock,
     TestCase,
@@ -33,39 +34,17 @@ class TestCriteria(TestCase):
     """
     Test the `Criteria` loader.
     """
+    INPUT_DIR = f'{os.path.dirname(__file__)}/input'
+    OUTPUT_DIR = f'{os.path.dirname(__file__)}/output'
 
     def setUp(self):
         self.class_loader = loaders.Criteria
 
-    @mock.patch('app.extractors.SMQ.read_snapshot')
-    @mock.patch('app.extractors.ThoughtRecord.read_snapshot')
-    @mock.patch('app.extractors.TherapySession.read_snapshot')
-    @mock.patch('app.extractors.PlannedEventCompletion.read_snapshot')
-    @mock.patch('app.extractors.Notification.read_snapshot')
-    @mock.patch('app.extractors.DiaryEntry.read_snapshot')
-    @mock.patch('app.extractors.CustomTracker.read_snapshot')
-    @mock.patch('app.extractors.Communication.read_snapshot')
-    @mock.patch('app.extractors.ClientInfo.read_snapshot')
-    def test_load(
-        self,
-        mock_read_client_snapshot,
-        mock_read_communication_snapshot,
-        mock_read_custom_tracker_snapshot,
-        mock_read_diary_entry_snapshot,
-        mock_read_notification_snapshot,
-        mock_read_event_completion_snapshot,
-        mock_read_therapy_session_snapshot,
-        mock_read_thought_record_snapshot,
-        mock_read_smq_snapshot
-    ):
-        """
-        Test to ensure the `load` method produces correct dataset.
-        """
-        input_dir = f'{os.path.dirname(__file__)}/input'
-
-        # Client info
-        mock_read_client_snapshot.return_value = pd.read_csv(
-            f'{input_dir}/dummy_users.csv',
+        # Mock snapshot of the client info
+        self.mock_read_snapshot_client_info = mock.patch('app.extractors.ClientInfo.read_snapshot')
+        read_snapshot_client_info = self.mock_read_snapshot_client_info.start()
+        read_snapshot_client_info.return_value = pd.read_csv(
+            f'{TestCriteria.INPUT_DIR}/dummy_users.csv',
             dtype={
                 'client_id': str,
                 'therapist_id': str,
@@ -76,9 +55,11 @@ class TestCriteria(TestCase):
             parse_dates=['start_time', 'end_time']
         )
 
-        # Communication
-        mock_read_communication_snapshot.return_value = pd.read_csv(
-            f'{input_dir}/dummy_communications.csv',
+        # Mock snapshot of the client's communications
+        self.mock_read_snapshot_communication = mock.patch('app.extractors.Communication.read_snapshot')
+        read_snapshot_communication = self.mock_read_snapshot_communication.start()
+        read_snapshot_communication.return_value = pd.read_csv(
+            f'{TestCriteria.INPUT_DIR}/dummy_communications.csv',
             dtype={
                 'client_id': str,
                 'start_time': str,
@@ -88,9 +69,9 @@ class TestCriteria(TestCase):
             parse_dates=['start_time']
         )
 
-        # Custom tracker
+        # Mock snapshot of the client's custom trackers
         custom_trackers = pd.read_csv(
-            f'{input_dir}/dummy_custom_trackers.csv',
+            f'{TestCriteria.INPUT_DIR}/dummy_custom_trackers.csv',
             dtype={
                 'client_id': str,
                 'start_time': str,
@@ -100,11 +81,14 @@ class TestCriteria(TestCase):
         )
         custom_trackers['start_time'] = pd.to_datetime(custom_trackers['start_time'], format='ISO8601')
         custom_trackers['value'] = custom_trackers['value'].apply(lambda item: to_dict(item))
-        mock_read_custom_tracker_snapshot.return_value = custom_trackers
 
-        # Diary entry
+        self.mock_read_snapshot_custom_tracker = mock.patch('app.extractors.CustomTracker.read_snapshot')
+        read_snapshot_custom_tracker = self.mock_read_snapshot_custom_tracker.start()
+        read_snapshot_custom_tracker.return_value = custom_trackers
+
+        # Mock snapshot of the client's diary entries
         diary_entries = pd.read_csv(
-            f'{input_dir}/dummy_diary_entries.csv',
+            f'{TestCriteria.INPUT_DIR}/dummy_diary_entries.csv',
             dtype={
                 'client_id': str,
                 'start_time': str,
@@ -113,11 +97,16 @@ class TestCriteria(TestCase):
             }
         )
         diary_entries['start_time'] = pd.to_datetime(diary_entries['start_time'], format='ISO8601')
-        mock_read_diary_entry_snapshot.return_value = diary_entries
 
-        # Notification
-        mock_read_notification_snapshot.return_value = pd.read_csv(
-            f'{input_dir}/dummy_notifications.csv',
+        self.mock_read_snapshot_diary_entry = mock.patch('app.extractors.DiaryEntry.read_snapshot')
+        read_snapshot_diary_entry = self.mock_read_snapshot_diary_entry.start()
+        read_snapshot_diary_entry.return_value = diary_entries
+
+        # Mock snapshot of the client's notifications
+        self.mock_read_snapshot_notification = mock.patch('app.extractors.Notification.read_snapshot')
+        read_snapshot_notification = self.mock_read_snapshot_notification.start()
+        read_snapshot_notification.return_value = pd.read_csv(
+            f'{TestCriteria.INPUT_DIR}/dummy_notifications.csv',
             dtype={
                 'client_id': str,
                 'type': str,
@@ -126,9 +115,11 @@ class TestCriteria(TestCase):
             parse_dates=['start_time']
         )
 
-        # Event completions
-        mock_read_event_completion_snapshot.return_value = pd.read_csv(
-            f'{input_dir}/dummy_event_completions.csv',
+        # Mock snapshot of the client's event completions
+        self.mock_read_snapshot_event_completion = mock.patch('app.extractors.PlannedEventCompletion.read_snapshot')
+        read_snapshot_event_completion = self.mock_read_snapshot_event_completion.start()
+        read_snapshot_event_completion.return_value = pd.read_csv(
+            f'{TestCriteria.INPUT_DIR}/dummy_event_completions.csv',
             dtype={
                 'client_id': str,
                 'planned_event_id': str,
@@ -138,9 +129,11 @@ class TestCriteria(TestCase):
             parse_dates=['start_time']
         )
 
-        # Therapy session
-        mock_read_therapy_session_snapshot.return_value = pd.read_csv(
-            f'{input_dir}/dummy_therapy_sessions.csv',
+        # Mock snapshot of the client's therapy sessions
+        self.mock_read_snapshot_therapy_session = mock.patch('app.extractors.TherapySession.read_snapshot')
+        read_snapshot_therapy_session = self.mock_read_snapshot_therapy_session.start()
+        read_snapshot_therapy_session.return_value = pd.read_csv(
+            f'{TestCriteria.INPUT_DIR}/dummy_therapy_sessions.csv',
             dtype={
                 'client_id': str,
                 'start_time': str,
@@ -148,9 +141,11 @@ class TestCriteria(TestCase):
             parse_dates=['start_time']
         )
 
-        # Thought record
-        mock_read_thought_record_snapshot.return_value = pd.read_csv(
-            f'{input_dir}/dummy_thought_records.csv',
+        # Mock snapshot of the client's thought records
+        self.mock_read_snapshot_thought_record = mock.patch('app.extractors.ThoughtRecord.read_snapshot')
+        read_snapshot_thought_record = self.mock_read_snapshot_thought_record.start()
+        read_snapshot_thought_record.return_value = pd.read_csv(
+            f'{TestCriteria.INPUT_DIR}/dummy_thought_records.csv',
             dtype={
                 'client_id': str,
                 'start_time': str,
@@ -158,9 +153,11 @@ class TestCriteria(TestCase):
             parse_dates=['start_time']
         )
 
-        # SMQ
-        mock_read_smq_snapshot.return_value = pd.read_csv(
-            f'{input_dir}/dummy_therapy_sessions.csv',
+        # Mock snapshot of the client's SMQ
+        self.mock_read_snapshot_smq = mock.patch('app.extractors.SMQ.read_snapshot')
+        read_snapshot_smq = self.mock_read_snapshot_smq.start()
+        read_snapshot_smq.return_value = pd.read_csv(
+            f'{TestCriteria.INPUT_DIR}/dummy_therapy_sessions.csv',
             dtype={
                 'client_id': str,
                 'start_time': str,
@@ -174,38 +171,62 @@ class TestCriteria(TestCase):
             parse_dates=['start_time']
         )
 
-        # Assert criteria dataset
+    def tearDown(self):
+        self.mock_read_snapshot_client_info.stop()
+        self.mock_read_snapshot_communication.stop()
+        self.mock_read_snapshot_custom_tracker.stop()
+        self.mock_read_snapshot_diary_entry.stop()
+        self.mock_read_snapshot_notification.stop()
+        self.mock_read_snapshot_notification.stop()
+        self.mock_read_snapshot_therapy_session.stop()
+        self.mock_read_snapshot_thought_record.stop()
+        self.mock_read_snapshot_smq.stop()
+
+    @mock.patch.object(loaders.Criteria, 'load', mock_criteria_load)
+    def test_load(self):
+        """
+        Test to ensure the `load` method produces correct dataset.
+        """
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            with mock.patch.object(loaders.Criteria, 'load', mock_criteria_load):
-                output_dir = f'{os.path.dirname(__file__)}/output'
+            criteria = self.class_loader()
 
-                actual__dataframe = self.class_loader().load()
-                expected__dataframe = pd.read_csv(
-                    f'{output_dir}/expected_criteria.csv',
-                    dtype={
-                        'case_id': str,
-                        'client_id': str,
-                        'p': 'int64',
-                        'a': 'int64',
-                        'b': 'int64',
-                        'c': 'int64',
-                        'd': 'int64',
-                        'e': 'int64',
-                        'f': 'int64',
-                        'g': 'int64',
-                        'h': 'int64',
-                        'i': 'int64'
-                    }
-                )
+            # Assert criteria dataset
+            actual__dataframe = criteria.load()
+            actual__dict = [
+                {key: series.tolist()}
+                for key, series in actual__dataframe.iterrows()
+            ]
+            expected__dataframe = pd.read_csv(
+                f'{TestCriteria.OUTPUT_DIR}/expected_criteria.csv',
+                dtype={
+                    'case_id': str,
+                    'client_id': str,
+                    'p': 'int64',
+                    'a': 'int64',
+                    'b': 'int64',
+                    'c': 'int64',
+                    'd': 'int64',
+                    'e': 'int64',
+                    'f': 'int64',
+                    'g': 'int64',
+                    'h': 'int64',
+                    'i': 'int64'
+                }
+            )
+            expected__dict = [
+                {key: series.tolist()}
+                for key, series in expected__dataframe.iterrows()
+            ]
+            self.assertListEqual(actual__dict, expected__dict)
 
-                actual__dict = [
-                    {key: series.tolist()}
-                    for key, series in actual__dataframe.iterrows()
-                ]
-                expected__dict = [
-                    {key: series.tolist()}
-                    for key, series in expected__dataframe.iterrows()
-                ]
-                self.assertListEqual(actual__dict, expected__dict)
+    def test_compute_case_id(self):
+        """
+        Test to ensure the `compute_case_id` method returns correct Case ID.
+        """
+        criteria = self.class_loader()
+
+        actual = criteria._compute_case_id('CID-1', 'TID-1', parse('2023-10-05'))
+        expected = 'a3c2c63911d765afb8f6ec7bf69fcc1c'
+        self.assertEqual(actual, expected)
