@@ -120,6 +120,14 @@ class CommonSetting:
 
     FILE_LOCATOR = FileLocator()
 
+    def __init__(self):
+        """
+        Overrides logging log level with the given `log_level`.
+        """
+        # Decrease minimum modify app log level into the `INFO` flag.
+        logging.root.setLevel(logging.INFO)
+        logging.basicConfig(level=logging.INFO)
+
     @staticmethod
     def running_date():
         """
@@ -149,11 +157,6 @@ class Development(CommonSetting):
     The class settings to run the `app` converter in local environment.
     """
     USE_REMOTE_DATA = False
-
-    def __init__(self) -> None:
-        # Decrease minimum modify app log level into the `INFO` flag.
-        logging.root.setLevel(logging.INFO)
-        logging.basicConfig(level=logging.INFO)
 
 
 class Production(CommonSetting):
