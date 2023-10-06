@@ -1,3 +1,4 @@
+import itertools
 import pandas as pd
 import warnings
 
@@ -8,6 +9,7 @@ from unittest import TestCase
 from app.transformators.communications_to_treatment_snapshots import (
     communications_to_treatment_snapshots,
     _to_client_treatments,
+    _create_snapshot_lists_from,
     _create_snapshots_from,
     _treatment_state_from,
 )
@@ -322,6 +324,70 @@ class TestCommunicationsToTreatmentSnapshots(TestCase):
             ]
             self.assertListEqual(actual__treatments, expected__treatments)
 
+    def test_create_snapshot_lists_from(self):
+        """
+        Test to ensure the `_create_snapshots_from` method returns correct result.
+        """
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+            client_info = pd.Series(
+                data={
+                    'client_id': 'cid-1',
+                    'therapist_id': 'tid-1',
+                    'start_time': parse('2023-09-01'),
+                    'end_time': parse('2023-09-30'),
+                    'no_of_registrations': 13
+                },
+                index=['client_id', 'therapist_id', 'start_time', 'end_time', 'no_of_registrations']
+            )
+
+            client_treatments = [
+                {
+                    'client_info': client_info,
+                    'treatment_phase': 0,
+                    'treatment_timestamp': parse('2023-09-03')
+                },
+                {
+                    'client_info': client_info,
+                    'treatment_phase': 0,
+                    'treatment_timestamp': parse('2023-09-05')
+                }
+            ]
+
+            snapshots = _create_snapshot_lists_from(client_treatments)
+            flat_snapshots = list(itertools.chain(*snapshots))
+
+            clients_info, treatments = [], []
+            for snapshot in flat_snapshots:
+                clients_info.append(snapshot.pop('client_info').to_dict())
+                treatments.append(snapshot)
+
+            # Assert client info
+            actual__clients_info = clients_info
+            expected__clients_info = [
+                {
+                    'client_id': 'cid-1',
+                    'therapist_id': 'tid-1',
+                    'start_time': parse('2023-09-01'),
+                    'end_time': parse('2023-09-30'),
+                    'no_of_registrations': 13
+                }
+                for _ in range(0, 16)
+            ]
+            self.assertListEqual(actual__clients_info, expected__clients_info)
+
+            # Assert treatment state
+            actual__treatments = treatments
+            expected__treatments = [
+                {'treatment_phase': 0, 'treatment_timestamp': parse('2023-09-03') - timedelta(days=d)}
+                for d in range(0, 14)
+            ] + [
+                {'treatment_phase': 0, 'treatment_timestamp': parse('2023-09-05') - timedelta(days=d)}
+                for d in range(0, 2)
+            ]
+            self.assertListEqual(actual__treatments, expected__treatments)
+
     def test_create_snapshots_from(self):
         """
         Test to ensure the `_create_snapshots_from` method returns correct result.
@@ -346,7 +412,7 @@ class TestCommunicationsToTreatmentSnapshots(TestCase):
                 'treatment_timestamp': parse('2023-09-03')
             }
 
-            snapshots = _create_snapshots_from(client_treatment, days_before=3)
+            snapshots = _create_snapshots_from(3, client_treatment)
 
             clients_info, treatments = [], []
             for snapshot in snapshots:
