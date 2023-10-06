@@ -30,10 +30,7 @@ def communications_to_treatment_snapshots(
     ]
     client_treatments = list(itertools.chain(*client_treatment_lists))
 
-    snapshot_lists = [
-        _create_snapshots_from(treatment, days_before=14)
-        for treatment in client_treatments
-    ]
+    snapshot_lists = _create_snapshot_lists_from(client_treatments)
     return list(itertools.chain(*snapshot_lists))
 
 
@@ -83,7 +80,32 @@ def _to_client_treatments(client: pd.Series, communications: pd.DataFrame) -> Li
     return client_treatments
 
 
-def _create_snapshots_from(treatment: Dict, days_before: int) -> List[Dict]:
+def _create_snapshot_lists_from(client_treatments: List[Dict]) -> List[List[Dict]]:
+    """
+    Returns treatment's snapshot lists from the given `client_treatments`.
+    """
+    prev_treatment = {}
+    snapshot_lists = []
+
+    for treatment in client_treatments:
+        client_id = treatment['client_info']['client_id']
+
+        if prev_treatment.get(client_id) is None:
+            # Generate snapshots 14 days before the treatment occurred.
+            days_before = 14
+        else:
+            # Generate snapshots between the current and previous treatment.
+            prev_treatment_timestamp = prev_treatment[client_id]['treatment_timestamp']
+            days_before = (treatment['treatment_timestamp'] - prev_treatment_timestamp).days
+
+        snapshot_lists.append(_create_snapshots_from(days_before, treatment))
+
+        prev_treatment[client_id] = treatment
+
+    return snapshot_lists
+
+
+def _create_snapshots_from(days_before: int, treatment: Dict) -> List[Dict]:
     """
     Returns snapshots of the client's treatment from the day(s)
     before the `treatment` is started.
