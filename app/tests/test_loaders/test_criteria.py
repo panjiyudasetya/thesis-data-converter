@@ -1,4 +1,3 @@
-import logging
 import os
 import pandas as pd
 import warnings
@@ -11,9 +10,6 @@ from unittest import (
 
 from app import loaders
 from app.helpers import to_dict
-
-
-logging.getLogger('app.loaders').setLevel(logging.WARNING)
 
 
 def mock_criteria_load(self):
