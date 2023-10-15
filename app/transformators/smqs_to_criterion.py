@@ -6,7 +6,7 @@ from typing import Union
 
 def smqs_to_criterion(last_smq: Union[pd.Series, None], previous_smq: Union[pd.Series, None]) -> int:
     """
-    Transforms the series of SMQ scores (last and previous) into Deeploy's criterion.
+    Transforms the series of SMQ scores (last and previous) into categorical value.
 
     Arguments:
         - `last_smq`: The last SMQ.

@@ -47,7 +47,7 @@ def _total_neg_regs(trackers: pd.DataFrame) -> int:
 
 def _to_criterion(percentage: int) -> int:
     """
-    Transforms the percentage of negative registration into the Deeploy's criterion.
+    Transforms the percentage of negative registration into categorical value.
     """
     TYPE_DECREASE = 0
     TYPE_STABLE = 1

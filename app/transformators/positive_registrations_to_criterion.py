@@ -42,7 +42,7 @@ def _total_pos_regs(trackers: pd.DataFrame) -> int:
 
 def _to_criterion(percentage: int) -> int:
     """
-    Transforms the percentage of positive registration into the Deeploy's criterion.
+    Transforms the percentage of positive registration into categorical value.
     """
     TYPE_DECREASE = 0
     TYPE_STABLE = 1
