@@ -2,10 +2,10 @@
 
 A GitHub repository to generate criteria dataset of the user with social phobia. It is used for academic purposes in Universitas Kristen Maranatha to complete a Master's Degree in Computer Science.
 
-## High level overview
+## High-level overview
 
 <p align="center">
-  <img src="https://github.com/panjiyudasetya/thesis-data-converter/assets/21379421/8388514c-425f-4bc9-813c-e20ce3132295" alt="Architecture Design"/>
+  <img src="https://github.com/panjiyudasetya/thesis-data-converter/assets/21379421/7929668f-9706-4994-98b6-90202d9f7ecc" alt="Architecture Design"/>
 </p>
 
 This module pulls data from Metabase, transforms them into a criteria dataset of the user with social phobia, and loads them into local storage.
