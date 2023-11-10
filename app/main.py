@@ -5,7 +5,7 @@ from app.settings import app_settings as settings
 
 class Main:
 
-    def __init__(self):
+    def __init__(self) -> None:
         # Extracts all collections from Metabase
         # when necessary.
         if settings.USE_REMOTE_DATA:

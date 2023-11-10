@@ -16,7 +16,7 @@ class FileLocator:
     of the `app` project
     """
 
-    def __init__(self, root_dir: str = 'snapshots'):
+    def __init__(self, root_dir: str = 'snapshots') -> None:
         self.root_dir = root_dir
 
     @property
@@ -120,7 +120,7 @@ class CommonSetting:
 
     FILE_LOCATOR = FileLocator()
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Overrides logging log level with the given `log_level`.
         """
@@ -129,7 +129,7 @@ class CommonSetting:
         logging.basicConfig(level=logging.INFO)
 
     @staticmethod
-    def running_date():
+    def running_date() -> datetime.date:
         """
         Returns the date of when the app converter must run.
         """

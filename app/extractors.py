@@ -27,7 +27,7 @@ FILE_LOCATOR = settings.FILE_LOCATOR
 
 class MetabaseCollection:
 
-    def download(self):
+    def download(self) -> None:
         """
         Pulls all of collection data from Metabase
         and stores them in the local storage.
@@ -46,7 +46,7 @@ class MetabaseCollection:
 
 class ClientInfo:
 
-    def download(self):
+    def download(self) -> None:
         """
         Downloads clients' information from Metabase.
         """
@@ -75,7 +75,7 @@ class ClientInfo:
 
 class Communication:
 
-    def download(self):
+    def download(self) -> None:
         """
         Downloads clients' communications from Metabase.
         """
@@ -103,7 +103,7 @@ class Communication:
 
 class CustomTracker:
 
-    def download(self):
+    def download(self) -> None:
         """
         Downloads clients' custom trackers from Metabase.
         """
@@ -141,7 +141,7 @@ class CustomTracker:
 
 class DiaryEntry:
 
-    def download(self):
+    def download(self) -> None:
         """
         Downloads clients' diary entries from Metabase.
         """
@@ -173,7 +173,7 @@ class DiaryEntry:
 
 class Notification:
 
-    def download(self):
+    def download(self) -> None:
         """
         Downloads notification data from Metabase.
         """
@@ -200,7 +200,7 @@ class Notification:
 
 class PlannedEvent:
 
-    def download(self):
+    def download(self) -> None:
         """
         Downloads planned events from Metabase.
         """
@@ -237,7 +237,7 @@ class PlannedEvent:
 
 class PlannedEventReflection:
 
-    def download(self):
+    def download(self) -> None:
         """
         Downloads planned event's reflections from Metabase.
         """
@@ -362,7 +362,7 @@ class PlannedEventCompletion:
 
 class TherapySession:
 
-    def download(self):
+    def download(self) -> None:
         """
         Downloads therapy sessions from Metabase.
         """
@@ -388,7 +388,7 @@ class TherapySession:
 
 class ThoughtRecord:
 
-    def download(self):
+    def download(self) -> None:
         """
         Downloads clients' thought records from Metabase.
         """
@@ -420,7 +420,7 @@ class ThoughtRecord:
 
 class SMQ:
 
-    def download(self):
+    def download(self) -> None:
         """
         Downloads SMQ results from Metabase.
         """

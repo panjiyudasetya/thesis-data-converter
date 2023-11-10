@@ -47,7 +47,7 @@ def api_tracer(response, *args, **kwargs) -> None:
 
 class BaseAPI:
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._debug_mode = True if isinstance(settings, Development) else False
 
         self._api_url = settings.METABASE_URL + '/api'
@@ -129,7 +129,7 @@ class BaseAPI:
 
 class MetabaseAPI(BaseAPI):
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         self._session_file = '.metabase.session.tmp'
