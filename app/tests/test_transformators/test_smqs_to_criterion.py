@@ -40,7 +40,7 @@ class TestSMQsToCriterion(TestCase):
         })
 
         actual = smqs_to_criterion(last_smq, previous_smq)
-        expected = 3  # Stable
+        expected = (1, 0)  # Large decrease, No low score
         self.assertEqual(actual, expected)
 
     def test_smqs_to_criterion_2(self):
@@ -70,7 +70,7 @@ class TestSMQsToCriterion(TestCase):
         })
 
         actual = smqs_to_criterion(last_smq, previous_smq)
-        expected = 3  # Stable
+        expected = (1, 0)  # Large decrease, No low score
         self.assertEqual(actual, expected)
 
     def test_smqs_to_criterion_3(self):
@@ -101,7 +101,7 @@ class TestSMQsToCriterion(TestCase):
         })
 
         actual = smqs_to_criterion(last_smq, previous_smq)
-        expected = 1  # Low score
+        expected = (2, 3)  # Stable with Low score
         self.assertEqual(actual, expected)
 
     def test_smqs_to_criterion_4(self):
@@ -132,7 +132,7 @@ class TestSMQsToCriterion(TestCase):
         })
 
         actual = smqs_to_criterion(last_smq, previous_smq)
-        expected = 0  # Large decrease
+        expected = (2, 0)  # Stable, No low score
         self.assertEqual(actual, expected)
 
     def test_smqs_to_criterion_5(self):
@@ -163,5 +163,5 @@ class TestSMQsToCriterion(TestCase):
         })
 
         actual = smqs_to_criterion(last_smq, previous_smq)
-        expected = 2  # Large increase
+        expected = (3, 0)  # Large increase, No low score
         self.assertEqual(actual, expected)
