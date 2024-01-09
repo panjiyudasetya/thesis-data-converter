@@ -40,15 +40,20 @@ class Criteria:
     CODE_CASE_ID = 'case_id'
     CODE_CLIENT_ID = 'client_id'
     CODE_TREATMENT_PHASE = 'p'
-    CODE_CRITERION_A = 'a'
+    CODE_CRITERION_A__BY_CALL = 'a__by_call'
+    CODE_CRITERION_A__BY_CHAT = 'a__by_chat'
     CODE_CRITERION_B = 'b'
     CODE_CRITERION_C = 'c'
     CODE_CRITERION_D = 'd'
     CODE_CRITERION_E = 'e'
-    CODE_CRITERION_F = 'f'
-    CODE_CRITERION_G = 'g'
+    CODE_CRITERION_F__SCHEDULE_PRIORITY = 'f__schedule_priority'
+    CODE_CRITERION_F__COMPLETION_PRIORITY = 'f__completion_priority'
+    CODE_CRITERION_G__REMINDER_PRIORITY = 'g__reminder_priority'
+    CODE_CRITERION_G__COMPLETION_PRIORITY = 'g__completion_priority'
     CODE_CRITERION_H = 'h'
-    CODE_CRITERION_I = 'i'
+    CODE_CRITERION_H__LOW_SCORE = 'h__low_score'
+    CODE_CRITERION_I__REMINDER_PRIORITY = 'i__reminder_priority'
+    CODE_CRITERION_I__COMPLETION_PRIORITY = 'i__completion_priority'
 
     def __init__(self) -> None:
         self.clients = ClientInfo().read_snapshot()
@@ -81,15 +86,20 @@ class Criteria:
             Criteria.CODE_CASE_ID: [],
             Criteria.CODE_CLIENT_ID: [],
             Criteria.CODE_TREATMENT_PHASE: [],
-            Criteria.CODE_CRITERION_A: [],
+            Criteria.CODE_CRITERION_A__BY_CALL: [],
+            Criteria.CODE_CRITERION_A__BY_CHAT: [],
             Criteria.CODE_CRITERION_B: [],
             Criteria.CODE_CRITERION_C: [],
             Criteria.CODE_CRITERION_D: [],
             Criteria.CODE_CRITERION_E: [],
-            Criteria.CODE_CRITERION_F: [],
-            Criteria.CODE_CRITERION_G: [],
+            Criteria.CODE_CRITERION_F__SCHEDULE_PRIORITY: [],
+            Criteria.CODE_CRITERION_F__COMPLETION_PRIORITY: [],
+            Criteria.CODE_CRITERION_G__REMINDER_PRIORITY: [],
+            Criteria.CODE_CRITERION_G__COMPLETION_PRIORITY: [],
             Criteria.CODE_CRITERION_H: [],
-            Criteria.CODE_CRITERION_I: []
+            Criteria.CODE_CRITERION_H__LOW_SCORE: [],
+            Criteria.CODE_CRITERION_I__REMINDER_PRIORITY: [],
+            Criteria.CODE_CRITERION_I__COMPLETION_PRIORITY: []
         }
 
         snapshots = communications_to_treatment_snapshots(self.clients, self.communications)
@@ -158,12 +168,7 @@ class Criteria:
     def _add_days_since_last_contact(self, client: pd.Series, data: Dict, snapshot_timestamp: datetime) -> None:
         """
         Add the number of days since the last interaction
-        between that `client` and their therapists to the criteria data.
-
-        The last interaction date defined as the maximum date between:
-        - The date of the last therapy session; AND
-        - The date of their last chat interaction; AND
-        - The date of their last call interaction;
+        between that `client` and their therapists to the criteria `a__by_call` and `a__by_chat`.
         """
         client_id = client['client_id']
 
@@ -182,9 +187,9 @@ class Criteria:
         ]
 
         # Append criterion `a`
-        data[Criteria.CODE_CRITERION_A].append(
-            interactions_to_criterion(communications, sessions, snapshot_timestamp)
-        )
+        a__by_call, a__by_chat = interactions_to_criterion(communications, sessions, snapshot_timestamp)
+        data[Criteria.CODE_CRITERION_A__BY_CALL].append(a__by_call)
+        data[Criteria.CODE_CRITERION_A__BY_CHAT].append(a__by_chat)
 
     def _add_days_since_last_registration(self, client: pd.Series, data: Dict, snapshot_timestamp: datetime) -> None:
         """
@@ -343,11 +348,9 @@ class Criteria:
         ]
 
         # Append criterion `f`
-        data[Criteria.CODE_CRITERION_F].append(
-            planned_events_to_criterion(events)
-        )
-
-        return data
+        schedule_priority, completion_priority = planned_events_to_criterion(events)
+        data[Criteria.CODE_CRITERION_F__SCHEDULE_PRIORITY].append(schedule_priority)
+        data[Criteria.CODE_CRITERION_F__COMPLETION_PRIORITY].append(completion_priority)
 
     def _add_completion_of_thought_records(self, client: pd.Series, data: Dict, snapshot_timestamp: datetime) -> None:
         """
@@ -377,9 +380,10 @@ class Criteria:
         ]
 
         # Append criterion `g`
-        data[Criteria.CODE_CRITERION_G].append(
-            thought_records_to_criterion(thought_records, notifications)
-        )
+        reminder_priority, completion_priority = thought_records_to_criterion(
+            thought_records, notifications)
+        data[Criteria.CODE_CRITERION_G__REMINDER_PRIORITY].append(reminder_priority)
+        data[Criteria.CODE_CRITERION_G__COMPLETION_PRIORITY].append(completion_priority)
 
     def _add_smq_answers(self, client: pd.Series, data: Dict, snapshot_timestamp: datetime) -> None:
         """
@@ -401,7 +405,9 @@ class Criteria:
         prev_smq = smqs.iloc[1] if len(smqs.index) > 1 else None
 
         # Append criterion `h`
-        data[Criteria.CODE_CRITERION_H].append(smqs_to_criterion(last_smq, prev_smq))
+        h__scores_diff, h__low_score = smqs_to_criterion(last_smq, prev_smq)
+        data[Criteria.CODE_CRITERION_H].append(h__scores_diff)
+        data[Criteria.CODE_CRITERION_H__LOW_SCORE].append(h__low_score)
 
     def _add_completion_of_diary_entries(self, client: pd.Series, data: Dict, snapshot_timestamp: datetime) -> None:
         """
@@ -431,9 +437,10 @@ class Criteria:
         ]
 
         # Append criterion `i`
-        data[Criteria.CODE_CRITERION_I].append(
-            diary_entries_to_criterion(diary_entries, notifications)
-        )
+        reminder_priority, completion_priority = diary_entries_to_criterion(
+            diary_entries, notifications)
+        data[Criteria.CODE_CRITERION_I__REMINDER_PRIORITY].append(reminder_priority)
+        data[Criteria.CODE_CRITERION_I__COMPLETION_PRIORITY].append(completion_priority)
 
     def _valid_treatments(self, group: any) -> any:
         """
@@ -442,7 +449,7 @@ class Criteria:
         condition = (
             (
                 # Days since last contact
-                group[Criteria.CODE_CRITERION_A].max() <= 30 and
+                group[Criteria.CODE_CRITERION_A__BY_CALL].max() <= 30 and
                 # Days since last registration
                 group[Criteria.CODE_CRITERION_B].max() <= 30 and
                 # No. of. custom trackers registrations in the past 7 days

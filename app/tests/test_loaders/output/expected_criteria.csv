@@ -1,3 +1,3 @@
-case_id,client_id,p,a,b,c,d,e,f,g,h,i
-b30d662680026f83b10dd055fe35ca1e,C1,2,0,0,7,3,1,3,1,3,1
-c69197f4dc3ced0e5145f1acd7faf43c,C1,2,13,0,7,3,1,3,1,3,1
+case_id,client_id,p,a__by_call,a__by_chat,b,c,d,e,f__schedule_priority,f__completion_priority,g__reminder_priority,g__completion_priority,h,h__low_score,i__reminder_priority, i__completion_priority
+b30d662680026f83b10dd055fe35ca1e,C1,2,0,0,0,7,3,1,3,0,3,1,2,0,3,1
+c69197f4dc3ced0e5145f1acd7faf43c,C1,2,13,13,0,7,3,1,3,0,3,1,2,0,3,1
