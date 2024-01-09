@@ -26,7 +26,7 @@ class TestPlannedEventsToCriterion(TestCase):
         })
 
         actual = planned_events_to_criterion(events_completion)
-        expected = 3  # Unplanned
+        expected = (3, 0)  # Unplanned, None
         self.assertEqual(actual, expected)
 
     def test_planned_events_to_criterion_2(self):
@@ -42,7 +42,7 @@ class TestPlannedEventsToCriterion(TestCase):
         })
 
         actual = planned_events_to_criterion(events_completion)
-        expected = 1  # Complete
+        expected = (1, 3)  # Planned, complete
         self.assertEqual(actual, expected)
 
     def test_planned_events_to_criterion_3(self):
@@ -58,7 +58,7 @@ class TestPlannedEventsToCriterion(TestCase):
         })
 
         actual = planned_events_to_criterion(events_completion)
-        expected = 0  # Incomplete
+        expected = (1, 1)  # Planned, incomplete
         self.assertEqual(actual, expected)
 
     def test_planned_events_to_criterion_4(self):
@@ -74,5 +74,5 @@ class TestPlannedEventsToCriterion(TestCase):
         })
 
         actual = planned_events_to_criterion(events_completion)
-        expected = 2  # Some complete
+        expected = (1, 2)  # Planned, some complete
         self.assertEqual(actual, expected)
