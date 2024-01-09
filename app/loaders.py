@@ -371,7 +371,9 @@ class Criteria:
         # Filters notifications data.
         notifications = self.notifications[
             (self.notifications['client_id'] == client_id) &
-            (self.notifications['type'] == 'gscheme_log')
+            (self.notifications['type'] == 'gscheme_log') &
+            (self.diary_entries['start_time'] > from_datetime) &
+            (self.diary_entries['start_time'] <= to_datetime)
         ]
 
         # Append criterion `g`
@@ -423,7 +425,9 @@ class Criteria:
         # Filters notifications data.
         notifications = self.notifications[
             (self.notifications['client_id'] == client_id) &
-            (self.notifications['type'] == 'diary_entry_log')
+            (self.notifications['type'] == 'diary_entry_log') &
+            (self.diary_entries['start_time'] > from_datetime) &
+            (self.diary_entries['start_time'] <= to_datetime)
         ]
 
         # Append criterion `i`
