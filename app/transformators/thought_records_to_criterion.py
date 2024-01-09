@@ -14,7 +14,7 @@ def thought_records_to_criterion(thought_records: pd.DataFrame, notifications: p
 
 def _get_reminder_priority(notifications: pd.DataFrame) -> int:
     """
-    Returns priority of the reminder activation 
+    Returns priority of the reminder activation
     from that thought records `notifications`.
     """
     REMINDED = 1
