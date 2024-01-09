@@ -33,7 +33,7 @@ class TestInteractionsToCriterion(TestCase):
         # Assert no. of days difference between the snapshot timestamp and the last chat
         # * The timestamp of the last chat is chosen because it's greater than the last session
         actual = interactions_to_criterion(communications, sessions, snapshot_timestamp)
-        expected = 3
+        expected = (4, 3)
         self.assertEqual(actual, expected)
 
     def test_interactions_to_criterion_2(self):
@@ -56,7 +56,7 @@ class TestInteractionsToCriterion(TestCase):
         # Assert no. of days difference between the snapshot timestamp and the last session
         # * The timestamp of the last session is chosen because it's greater than the last chat message
         actual = interactions_to_criterion(communications, sessions, snapshot_timestamp)
-        expected = 2
+        expected = (2, 4)
         self.assertEqual(actual, expected)
 
     def test_interactions_to_criterion_3(self):
@@ -79,7 +79,7 @@ class TestInteractionsToCriterion(TestCase):
         # Assert no. of days difference between the snapshot timestamp and the last session
         # * The timestamp of the last session is chosen when there is no communication data
         actual = interactions_to_criterion(communications, sessions, snapshot_timestamp)
-        expected = 2
+        expected = (2, None)
         self.assertEqual(actual, expected)
 
     def test_interactions_to_criterion_4(self):
@@ -102,7 +102,7 @@ class TestInteractionsToCriterion(TestCase):
         # Assert no. of days difference between the snapshot timestamp and the last session
         # * The timestamp of the last chat is chosen when there is no sessions
         actual = interactions_to_criterion(communications, sessions, snapshot_timestamp)
-        expected = 4
+        expected = (None, 4)
         self.assertEqual(actual, expected)
 
     def test_interactions_to_criterion_5(self):
@@ -124,4 +124,5 @@ class TestInteractionsToCriterion(TestCase):
 
         # Assert no. of days difference is None when there is no sessions and communication data
         actual = interactions_to_criterion(communications, sessions, snapshot_timestamp)
-        self.assertIsNone(actual)
+        expected = (None, None)
+        self.assertEqual(actual, expected)
