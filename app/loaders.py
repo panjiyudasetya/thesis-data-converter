@@ -134,12 +134,48 @@ class Criteria:
         if not os.path.exists(directory):
             os.makedirs(directory)
 
+        # Relevant columns
+        relevant_columns = [
+            Criteria.CODE_CASE_ID,
+            Criteria.CODE_CLIENT_ID,
+            Criteria.CODE_CRITERION_A__BY_CALL,
+            Criteria.CODE_CRITERION_A__BY_CHAT,
+            Criteria.CODE_CRITERION_B,
+            Criteria.CODE_CRITERION_C,
+            Criteria.CODE_CRITERION_D,
+            Criteria.CODE_CRITERION_E,
+            Criteria.CODE_CRITERION_F__SCHEDULE_PRIORITY,
+            Criteria.CODE_CRITERION_F__COMPLETION_PRIORITY,
+            Criteria.CODE_CRITERION_G__REMINDER_PRIORITY,
+            Criteria.CODE_CRITERION_G__COMPLETION_PRIORITY,
+            Criteria.CODE_CRITERION_H,
+            Criteria.CODE_CRITERION_H__LOW_SCORE,
+            Criteria.CODE_CRITERION_I__REMINDER_PRIORITY,
+            Criteria.CODE_CRITERION_I__COMPLETION_PRIORITY,
+        ]
+
         # Stores raw criteria dataset
-        criteria.to_csv(f"{directory}/all_{filename}", float_format='%g', index=False)
+        criteria[relevant_columns].to_csv(
+            f"{directory}/all_{filename}",
+            float_format='%g',
+            index=False
+        )
 
         # Stores criteria dataset for valid treatments
         valid_criteria = criteria.groupby('client_id').filter(self._valid_treatments)
-        valid_criteria.to_csv(f"{directory}/valid_{filename}", float_format='%g', index=False)
+        valid_criteria[relevant_columns].to_csv(
+            f"{directory}/valid_{filename}",
+            float_format='%g',
+            index=False
+        )
+
+        # Stores criteria dataset with identified treatment phase
+        relevant_columns.insert(2, Criteria.CODE_TREATMENT_PHASE)
+        valid_criteria[relevant_columns].to_csv(
+            f"{directory}/identified_valid_{filename}",
+            float_format='%g',
+            index=False
+        )
 
     def _add_common_information(self, snapshot: Dict, data: Dict) -> None:
         """
@@ -449,7 +485,10 @@ class Criteria:
         condition = (
             (
                 # Days since last contact
-                group[Criteria.CODE_CRITERION_A__BY_CALL].max() <= 30 and
+                (
+                    (group[Criteria.CODE_CRITERION_A__BY_CALL].max() <= 30) |
+                    (group[Criteria.CODE_CRITERION_A__BY_CHAT].max() <= 30)
+                ) and
                 # Days since last registration
                 group[Criteria.CODE_CRITERION_B].max() <= 30 and
                 # No. of. custom trackers registrations in the past 7 days
