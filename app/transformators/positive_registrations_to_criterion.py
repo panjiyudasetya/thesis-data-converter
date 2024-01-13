@@ -44,9 +44,9 @@ def _to_criterion(percentage: int) -> int:
     """
     Transforms the percentage of positive registration into categorical value.
     """
-    TYPE_DECREASE = 0
+    TYPE_INCREASE = 0
     TYPE_STABLE = 1
-    TYPE_INCREASE = 2
+    TYPE_DECREASE = 2
 
     if percentage > 20:
         return TYPE_INCREASE

@@ -61,7 +61,7 @@ class TestPositiveRegistrationsToCriterion(TestCase):
             trackers_past_7d,
             trackers_1w_before_past_7d
         )
-        expected = 2  # Increase
+        expected = 0  # Increase
         self.assertEqual(actual, expected)
 
     def test_positive_registrations_to_criterion_2(self):
@@ -157,7 +157,7 @@ class TestPositiveRegistrationsToCriterion(TestCase):
             trackers_past_7d,
             trackers_1w_before_past_7d
         )
-        expected = 0  # Decrease
+        expected = 2  # Decrease
         self.assertEqual(actual, expected)
 
     def test_total_pos_regs(self):
@@ -197,7 +197,7 @@ class TestPositiveRegistrationsToCriterion(TestCase):
         Test to ensure the `_to_criterion` method returns correct criterion.
         """
         actual = _to_criterion(120)
-        expected = 2  # Increase
+        expected = 0  # Increase
         self.assertEqual(actual, expected)
 
     def test_to_criterion_2(self):
@@ -213,5 +213,5 @@ class TestPositiveRegistrationsToCriterion(TestCase):
         Test to ensure the `_to_criterion` method returns correct criterion.
         """
         actual = _to_criterion(-20)
-        expected = 0  # Decrease
+        expected = 2  # Decrease
         self.assertEqual(actual, expected)
