@@ -38,6 +38,7 @@ FILE_LOCATOR = settings.FILE_LOCATOR
 class Criteria:
 
     CODE_CASE_ID = 'case_id'
+    CODE_CASE_CREATED_AT = 'case_created_at'
     CODE_CLIENT_ID = 'client_id'
     CODE_TREATMENT_PHASE = 'p'
     CODE_CRITERION_A__BY_CALL = 'a__by_call'
@@ -84,6 +85,7 @@ class Criteria:
         """
         criteria_data = {
             Criteria.CODE_CASE_ID: [],
+            Criteria.CODE_CASE_CREATED_AT: [],
             Criteria.CODE_CLIENT_ID: [],
             Criteria.CODE_TREATMENT_PHASE: [],
             Criteria.CODE_CRITERION_A__BY_CALL: [],
@@ -137,6 +139,7 @@ class Criteria:
         # Relevant columns
         relevant_columns = [
             Criteria.CODE_CASE_ID,
+            Criteria.CODE_CASE_CREATED_AT,
             Criteria.CODE_CLIENT_ID,
             Criteria.CODE_CRITERION_A__BY_CALL,
             Criteria.CODE_CRITERION_A__BY_CHAT,
@@ -181,7 +184,8 @@ class Criteria:
         """
         Add the common information from that `snapshot` to the criteria data.
 
-        The common information consists of Case ID, Client ID, and his phase of the treatment.
+        The common information consists of Case ID, Case Created At, Client ID,
+        and their phase of the treatment.
         """
         client = snapshot['client_info']
         treatment_phase = snapshot['treatment_phase']
@@ -194,6 +198,9 @@ class Criteria:
         # Append Case ID
         new_case_id = self._compute_case_id(client_id, client['therapist_id'], treatment_timestamp)
         data[Criteria.CODE_CASE_ID].append(new_case_id)
+
+        # Append Snapshot's Timestamp
+        data[Criteria.CODE_CASE_CREATED_AT].append(treatment_timestamp.strftime("%Y-%m-%d"))
 
         # Append Client ID
         data[Criteria.CODE_CLIENT_ID].append(client_id)
