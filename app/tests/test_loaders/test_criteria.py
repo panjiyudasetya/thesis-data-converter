@@ -198,6 +198,7 @@ class TestCriteria(TestCase):
                 f'{TestCriteria.OUTPUT_DIR}/expected_criteria.csv',
                 dtype={
                     'case_id': str,
+                    'case_created_at': str,
                     'client_id': str,
                     'p': 'int64',
                     'a': 'int64',
