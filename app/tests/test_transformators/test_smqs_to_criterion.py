@@ -101,7 +101,7 @@ class TestSMQsToCriterion(TestCase):
         })
 
         actual = smqs_to_criterion(last_smq, previous_smq)
-        expected = (2, 3)  # Stable with Low score
+        expected = (2, 1)  # Stable with Low score
         self.assertEqual(actual, expected)
 
     def test_smqs_to_criterion_4(self):

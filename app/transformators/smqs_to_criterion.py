@@ -57,7 +57,7 @@ def _get_low_score(last_smq: Union[pd.Series, None]) -> int:
 
     # Calculate criterion
     NONE = 0
-    LOW_SCORE = 3
+    LOW_SCORE = 1
 
     if last_scores is not None and np.any(last_scores < 4.5):
         return LOW_SCORE
