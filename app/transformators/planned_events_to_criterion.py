@@ -15,8 +15,8 @@ def _get_schedule_priority(events: pd.DataFrame) -> int:
     """
     Returns priority of the schedule type from that `events`.
     """
+    UNPLANNED = 0
     PLANNED = 1
-    UNPLANNED = 3
 
     events_count = len(events.index)
     return UNPLANNED if events_count == 0 else PLANNED

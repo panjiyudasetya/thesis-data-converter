@@ -26,7 +26,7 @@ class TestPlannedEventsToCriterion(TestCase):
         })
 
         actual = planned_events_to_criterion(events_completion)
-        expected = (3, 0)  # Unplanned, None
+        expected = (0, 0)  # Unplanned, None
         self.assertEqual(actual, expected)
 
     def test_planned_events_to_criterion_2(self):
