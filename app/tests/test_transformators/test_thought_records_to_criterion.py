@@ -29,7 +29,7 @@ class TestThoughtRecordsToCriterion(TestCase):
         })
 
         actual = thought_records_to_criterion(thought_records, notifications)
-        expected = (1, 3)  # Reminded and complete
+        expected = (1, 1)  # Reminded and complete
         self.assertEqual(actual, expected)
 
     def test_thought_records_to_criterion_2(self):
@@ -44,7 +44,7 @@ class TestThoughtRecordsToCriterion(TestCase):
         notifications = pd.DataFrame()
 
         actual = thought_records_to_criterion(thought_records, notifications)
-        expected = (3, 3)  # Unreminded but complete
+        expected = (0, 1)  # Unreminded but complete
         self.assertEqual(actual, expected)
 
     def test_thought_records_to_criterion_3(self):
@@ -60,7 +60,7 @@ class TestThoughtRecordsToCriterion(TestCase):
         })
 
         actual = thought_records_to_criterion(thought_records, notifications)
-        expected = (1, 1)  # Reminded and incomplete
+        expected = (1, 0)  # Reminded and incomplete
         self.assertEqual(actual, expected)
 
     def test_thought_records_to_criterion_4(self):
@@ -72,5 +72,5 @@ class TestThoughtRecordsToCriterion(TestCase):
         notifications = pd.DataFrame()
 
         actual = thought_records_to_criterion(thought_records, notifications)
-        expected = (3, 1)  # Unreminded and incomplete
+        expected = (0, 0)  # Unreminded and incomplete
         self.assertEqual(actual, expected)
