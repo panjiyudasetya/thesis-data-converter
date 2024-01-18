@@ -47,14 +47,14 @@ class Criteria:
     CODE_CRITERION_C = 'c'
     CODE_CRITERION_D = 'd'
     CODE_CRITERION_E = 'e'
-    CODE_CRITERION_F__SCHEDULE_PRIORITY = 'f__schedule_priority'
-    CODE_CRITERION_F__COMPLETION_PRIORITY = 'f__completion_priority'
-    CODE_CRITERION_G__REMINDER_PRIORITY = 'g__reminder_priority'
-    CODE_CRITERION_G__COMPLETION_PRIORITY = 'g__completion_priority'
+    CODE_CRITERION_F__IS_SCHEDULED = 'f__is_scheduled'
+    CODE_CRITERION_F__COMPLETION_STATUS = 'f__completion_status'
+    CODE_CRITERION_G__IS_REMINDER_ACTIVATED = 'g__is_reminder_activated'
+    CODE_CRITERION_G__IS_COMPLETED = 'g__is_completed'
     CODE_CRITERION_H = 'h'
     CODE_CRITERION_H__LOW_SCORE = 'h__low_score'
-    CODE_CRITERION_I__REMINDER_PRIORITY = 'i__reminder_priority'
-    CODE_CRITERION_I__COMPLETION_PRIORITY = 'i__completion_priority'
+    CODE_CRITERION_I__IS_REMINDER_ACTIVATED = 'i__is_reminder_activated'
+    CODE_CRITERION_I__IS_COMPLETED = 'i__is_completed'
 
     def __init__(self) -> None:
         self.clients = ClientInfo().read_snapshot()
@@ -94,14 +94,14 @@ class Criteria:
             Criteria.CODE_CRITERION_C: [],
             Criteria.CODE_CRITERION_D: [],
             Criteria.CODE_CRITERION_E: [],
-            Criteria.CODE_CRITERION_F__SCHEDULE_PRIORITY: [],
-            Criteria.CODE_CRITERION_F__COMPLETION_PRIORITY: [],
-            Criteria.CODE_CRITERION_G__REMINDER_PRIORITY: [],
-            Criteria.CODE_CRITERION_G__COMPLETION_PRIORITY: [],
+            Criteria.CODE_CRITERION_F__IS_SCHEDULED: [],
+            Criteria.CODE_CRITERION_F__COMPLETION_STATUS: [],
+            Criteria.CODE_CRITERION_G__IS_REMINDER_ACTIVATED: [],
+            Criteria.CODE_CRITERION_G__IS_COMPLETED: [],
             Criteria.CODE_CRITERION_H: [],
             Criteria.CODE_CRITERION_H__LOW_SCORE: [],
-            Criteria.CODE_CRITERION_I__REMINDER_PRIORITY: [],
-            Criteria.CODE_CRITERION_I__COMPLETION_PRIORITY: []
+            Criteria.CODE_CRITERION_I__IS_REMINDER_ACTIVATED: [],
+            Criteria.CODE_CRITERION_I__IS_COMPLETED: []
         }
 
         snapshots = communications_to_treatment_snapshots(self.clients, self.communications)
@@ -147,14 +147,14 @@ class Criteria:
             Criteria.CODE_CRITERION_C,
             Criteria.CODE_CRITERION_D,
             Criteria.CODE_CRITERION_E,
-            Criteria.CODE_CRITERION_F__SCHEDULE_PRIORITY,
-            Criteria.CODE_CRITERION_F__COMPLETION_PRIORITY,
-            Criteria.CODE_CRITERION_G__REMINDER_PRIORITY,
-            Criteria.CODE_CRITERION_G__COMPLETION_PRIORITY,
+            Criteria.CODE_CRITERION_F__IS_SCHEDULED,
+            Criteria.CODE_CRITERION_F__COMPLETION_STATUS,
+            Criteria.CODE_CRITERION_G__IS_REMINDER_ACTIVATED,
+            Criteria.CODE_CRITERION_G__IS_COMPLETED,
             Criteria.CODE_CRITERION_H,
             Criteria.CODE_CRITERION_H__LOW_SCORE,
-            Criteria.CODE_CRITERION_I__REMINDER_PRIORITY,
-            Criteria.CODE_CRITERION_I__COMPLETION_PRIORITY,
+            Criteria.CODE_CRITERION_I__IS_REMINDER_ACTIVATED,
+            Criteria.CODE_CRITERION_I__IS_COMPLETED,
         ]
 
         # Stores raw criteria dataset
@@ -392,8 +392,8 @@ class Criteria:
 
         # Append criterion `f`
         schedule_priority, completion_priority = planned_events_to_criterion(events)
-        data[Criteria.CODE_CRITERION_F__SCHEDULE_PRIORITY].append(schedule_priority)
-        data[Criteria.CODE_CRITERION_F__COMPLETION_PRIORITY].append(completion_priority)
+        data[Criteria.CODE_CRITERION_F__IS_SCHEDULED].append(schedule_priority)
+        data[Criteria.CODE_CRITERION_F__COMPLETION_STATUS].append(completion_priority)
 
     def _add_completion_of_thought_records(self, client: pd.Series, data: Dict, snapshot_timestamp: datetime) -> None:
         """
@@ -425,8 +425,8 @@ class Criteria:
         # Append criterion `g`
         reminder_priority, completion_priority = thought_records_to_criterion(
             thought_records, notifications)
-        data[Criteria.CODE_CRITERION_G__REMINDER_PRIORITY].append(reminder_priority)
-        data[Criteria.CODE_CRITERION_G__COMPLETION_PRIORITY].append(completion_priority)
+        data[Criteria.CODE_CRITERION_G__IS_REMINDER_ACTIVATED].append(reminder_priority)
+        data[Criteria.CODE_CRITERION_G__IS_COMPLETED].append(completion_priority)
 
     def _add_smq_answers(self, client: pd.Series, data: Dict, snapshot_timestamp: datetime) -> None:
         """
@@ -482,8 +482,8 @@ class Criteria:
         # Append criterion `i`
         reminder_priority, completion_priority = diary_entries_to_criterion(
             diary_entries, notifications)
-        data[Criteria.CODE_CRITERION_I__REMINDER_PRIORITY].append(reminder_priority)
-        data[Criteria.CODE_CRITERION_I__COMPLETION_PRIORITY].append(completion_priority)
+        data[Criteria.CODE_CRITERION_I__IS_REMINDER_ACTIVATED].append(reminder_priority)
+        data[Criteria.CODE_CRITERION_I__IS_COMPLETED].append(completion_priority)
 
     def _valid_treatments(self, group: any) -> any:
         """

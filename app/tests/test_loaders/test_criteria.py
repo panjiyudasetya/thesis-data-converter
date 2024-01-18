@@ -201,21 +201,27 @@ class TestCriteria(TestCase):
                     'case_created_at': str,
                     'client_id': str,
                     'p': 'int64',
-                    'a': 'int64',
+                    'a__by_call': 'int64',
+                    'a__by_chat': 'int64',
                     'b': 'int64',
                     'c': 'int64',
                     'd': 'int64',
                     'e': 'int64',
-                    'f': 'int64',
-                    'g': 'int64',
+                    'f__is_scheduled': 'int64',
+                    'f__completion_status': 'int64',
+                    'g__is_reminder_activated': 'int64',
+                    'g__is_completed': 'int64',
                     'h': 'int64',
-                    'i': 'int64'
+                    'h__low_score': 'int64',
+                    'i__is_reminder_activated': 'int64',
+                    'i__is_completed': 'int64',
                 }
             )
             expected__dict = [
                 {key: series.tolist()}
                 for key, series in expected__dataframe.iterrows()
             ]
+            self.maxDiff = None
             self.assertListEqual(actual__dict, expected__dict)
 
     def test_compute_case_id(self):
